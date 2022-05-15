@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
+
+.hcoach {
+    font-family: 'Koulen', cursive;
+    color: white;
+    font-size: 40px;
+    margin-left: 390px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.h2coach {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+    color: white;
+    display: inline;
+}
+
+.Select1 {
+    font-size: 17px;
+    display: inline;
+    margin: 10px;
+}
+.Select2 {
+    font-size: 17px;
+    display: inline;
+    margin: 10px;
+}
+.Select3 {
+    font-size: 17px;
+    display: inline;
+    margin: 10px;
+}
+.Select4 {
+    font-size: 17px;
+    display: inline;
+    margin: 10px;
+}
+
+.thcoach {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+}
+
+#encontrarcoachselect {
+    width: 700px;
+    margin-left: 310px;
+}
+
+.botonBuscar {
+    margin-left: 190px;
+    background-color: darkturquoise;
+    color: white;
+    font-family: 'Koulen', cursive;
+    border-radius: 30px;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 30px;
+    margin-bottom: -200px;
+    margin-top: 15px;
+}
+
+.botonBuscar:hover {
+    margin-left: 190px;
+    background-color: darkcyan;
+    color: white;
+    font-family: 'Koulen', cursive;
+    border-radius: 30px;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 30px;
+    margin-bottom: -200px;
+    margin-top: 15px;
+}

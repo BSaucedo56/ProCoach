@@ -1,0 +1,31 @@
+﻿@model ProyectoIntegradorII.Models.Usuario
+
+@{
+    ViewData["Title"] = "Login"; 
+}
+
+<div class="loginBox"> 
+        <img class="user" src="https://i.ibb.co/yVGxFPR/2.png" height="100px" width="100px">
+        <h1>LOGIN</h1>
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group rounded col-auto text-center">
+                    <input asp-for="nombre_usuario" id="txtUsuario" type="text" class="form-control" placeholder="USERNAME"/>
+                    <span asp-validation-for="nombre_usuario" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group rounded col-auto text-center">
+                <input asp-for="contrasena" id="txtClave" type="password" class="form-control" placeholder="PASSWORD"/>
+                <span asp-validation-for="contrasena" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group rounded">
+                <a asp-action="Login" class="input-limpiar">Limpiar</a>
+                <input id="btnEntrar" type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form> 
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

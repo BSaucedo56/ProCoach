@@ -1,0 +1,98 @@
+﻿@model IEnumerable<ProyectoIntegradorII.Models.ECoach>
+
+@{
+    ViewData["Title"] = "Consultas";
+}
+
+<h1 class="hcoach">ENCONTRAR UN COACH</h1>
+
+@using(Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div id="encontrarcoachselect">
+        <h2 class="h2coach">Especialidad:</h2>
+            <div class="Select1">
+            @Html.DropDownList("especialidades", (SelectList)ViewBag.especialidades, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2coach">Certificación ICF:</h2>
+            <div class="Select2">
+            @Html.DropDownList("certificaciones", (SelectList)ViewBag.certificaciones, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2coach">Metodo de Coaching:</h2>
+            <div class="Select3">
+            @Html.DropDownList("metodos", (SelectList)ViewBag.metodos, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2coach">Idioma:</h2>
+            <div class="Select4">
+            @Html.DropDownList("idiomas", (SelectList)ViewBag.idiomas, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+           @* <button class="botonBuscar">Buscar</button>*@
+            <input type="submit" value="Buscar" class="botonBuscar" />
+    </div>
+}
+<br />
+<div class="table_div">
+<table class="table" style="background-color: white; border-radius: 3px;">
+    <thead>
+        <tr>
+            <th class="thcoach">
+                @Html.DisplayNameFor(model => model.coach)
+            </th>
+            <th class="thcoach">
+                @Html.DisplayNameFor(model => model.especialidad)
+            </th>
+            <th class="thcoach">
+                @Html.DisplayNameFor(model => model.certificacionICF)
+            </th>
+            <th class="thcoach">
+                @Html.DisplayNameFor(model => model.metodoCoaching)
+            </th>
+            <th class="thcoach">
+                @Html.DisplayNameFor(model => model.idioma)
+            </th>
+            <th class="thcoach">
+                @Html.DisplayNameFor(model => model.pais)
+            </th>
+            <th>
+                @*ActionLink*@
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.coach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.especialidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.certificacionICF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.metodoCoaching)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idioma)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pais)
+            </td>
+            <td>
+                @Html.ActionLink("Info", "Coach", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Solicitar", "Coach", new { /* id=item.PrimaryKey */ }) |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
