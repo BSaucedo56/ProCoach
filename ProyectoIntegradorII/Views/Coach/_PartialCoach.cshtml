@@ -85,7 +85,7 @@
             @if (pager.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="1" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">First</a>
+                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="1" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Primero</a>
                 </li>
                 <li>
                     <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.CurrentPage - 1)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">&lt;</a>
@@ -105,7 +105,7 @@
                     <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.CurrentPage+1)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">&gt;</a>
                 </li>
                 <li>
-                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.TotalPages)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Last</a>
+                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.TotalPages)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Último</a>
                 </li>
             }
         </ul>    
