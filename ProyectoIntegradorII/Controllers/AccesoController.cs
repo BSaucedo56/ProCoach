@@ -4,20 +4,21 @@ using Microsoft.AspNetCore.Session;
 using System.Data;
 using ProyectoIntegradorII.Models;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoIntegradorII.Datos;
 
 namespace ProyectoIntegradorII.Controllers
 {
     public class AccesoController : Controller
     {
-        //CADENA DE CONEXIÓN 
-        const string cadena = @"server=BRYAN; database=COACHDB; Trusted_Connection=True; " + "MultipleActiveResultSets=True; TrustServerCertificate=False; Encrypt=False";
         string sesion = "";
 
         string Ingreso(string nombre, string clave)
         {
             string ingreso = "";
 
-            using (SqlConnection cn = new SqlConnection(cadena)) // ESTABLECE LA CONEXIÓN CON LA BD
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
                 cn.Open();
                 try

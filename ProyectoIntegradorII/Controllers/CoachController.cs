@@ -2,32 +2,32 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient; //ACCESO A LOS DATOS DE LA BD COACHBD
+using ProyectoIntegradorII.Datos;
 using ProyectoIntegradorII.Models;
 
 namespace ProyectoIntegradorII.Controllers
 {
     public class CoachController : Controller
     {
-        //CADENA DE CONEXIÓN 
-        const string cadena = @"server=BRYAN; database=COACHDB; Trusted_Connection=True; " + "MultipleActiveResultSets=True; TrustServerCertificate=False; Encrypt=False";
-
         IEnumerable<Especialidad> especialidades()
         {
             List<Especialidad> temporal = new List<Especialidad>();
 
-            using (SqlConnection cn = new SqlConnection(cadena)) // ESTABLECE LA CONEXIÓN CON LA BD
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_ESPECIALIDAD", cn);
-                cn.Open(); 
+                SqlCommand cmd = new SqlCommand("exec USP_ESPECIALIDAD", cn); // Select a la tabla especialidad
+                cn.Open(); //Abrir la conexión
                 SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
-                while (dr.Read())
+                while (dr.Read()) //Lee cada uno de los registros
                 {
                     Especialidad obj = new Especialidad()
                     {
                         idEspecialidad = dr.GetInt32(0),
                         descripcion = dr.GetString(1),
                     };
-                    temporal.Add(obj);
+                    temporal.Add(obj); //crea cada elemento en temporal
                 }
             }
             return temporal;
@@ -37,19 +37,21 @@ namespace ProyectoIntegradorII.Controllers
         {
             List<CertificacionICF> temporal = new List<CertificacionICF>();
 
-            using (SqlConnection cn = new SqlConnection(cadena)) // ESTABLECE LA CONEXIÓN CON LA BD
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_CERTIFICACIONICF", cn);
+                SqlCommand cmd = new SqlCommand("exec USP_CERTIFICACIONICF", cn); // Select a la tabla certificacionicf
                 cn.Open(); //ACTIVA LA CONEXIÓN
                 SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
-                while (dr.Read())
+                while (dr.Read()) //Lee cada uno de los registros
                 {
                     CertificacionICF obj = new CertificacionICF()
                     {
                         idCertificacion = dr.GetInt32(0),
                         certificacion = dr.GetString(1),
                     };
-                    temporal.Add(obj);
+                    temporal.Add(obj); //crea cada elemento en temporal
                 }
             }
             return temporal;
@@ -59,19 +61,21 @@ namespace ProyectoIntegradorII.Controllers
         {
             List<Metodo> temporal = new List<Metodo>();
 
-            using (SqlConnection cn = new SqlConnection(cadena)) // ESTABLECE LA CONEXIÓN CON LA BD
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_METODOSCOACHING", cn);
+                SqlCommand cmd = new SqlCommand("exec USP_METODOSCOACHING", cn); // Select a la tabla metodo
                 cn.Open(); //ACTIVA LA CONEXIÓN
                 SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
-                while (dr.Read())
+                while (dr.Read()) //Lee cada uno de los registros
                 {
                     Metodo obj = new Metodo()
                     {
                         idMetodo = dr.GetInt32(0),
                         nombreMetodo = dr.GetString(1),
                     };
-                    temporal.Add(obj);
+                    temporal.Add(obj); //crea cada elemento en temporal
                 }
             }
             return temporal;
@@ -81,9 +85,11 @@ namespace ProyectoIntegradorII.Controllers
         {
             List<Idioma> temporal = new List<Idioma>();
 
-            using (SqlConnection cn = new SqlConnection(cadena)) // ESTABLECE LA CONEXIÓN CON LA BD
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_IDIOMA", cn);
+                SqlCommand cmd = new SqlCommand("exec USP_IDIOMA", cn); // Select a la tabla idioma
                 cn.Open(); //ACTIVA LA CONEXIÓN
                 SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
                 while (dr.Read()) // MIENTRAS SE LEA LAS FILAS
@@ -93,20 +99,38 @@ namespace ProyectoIntegradorII.Controllers
                         idIdioma = dr.GetInt32(0),
                         idioma = dr.GetString(1),
                     };
-                    temporal.Add(obj);
+                    temporal.Add(obj); //crea cada elemento en temporal
                 }
             }
             return temporal;
         }
 
-        IEnumerable<ECoach> coaches(string e = "", string co = "", string m = "", string i = "")
+        IEnumerable<ECoach> coaches(string e, string co, string m, string i)
         {
-            List<ECoach> temporal = new List<ECoach>();
-            if (e == "" && co == "" && m == "" && i == "") return temporal;
-
-            using (SqlConnection cn = new SqlConnection(cadena)) // ESTABLECE LA CONEXIÓN CON LA BD
+            if (e == null)
             {
-                SqlCommand cmd = new SqlCommand("exec USP_ENCONTRAR_COACH2 @ESPECIALIDAD,@CERTIFICACIONICF,@METODOCOACHING,@IDIOMA", cn);
+                e = "";
+            }
+            if (co == null)
+            {
+                co = "";
+            }
+            if (m == null)
+            {
+                m = "";
+            }
+            if (i == null)
+            {
+                i = "";
+            }
+
+            List<ECoach> temporal = new List<ECoach>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+            {
+                SqlCommand cmd = new SqlCommand("exec USP_ENCONTRAR_COACH @ESPECIALIDAD,@CERTIFICACIONICF,@METODOCOACHING,@IDIOMA", cn);
                 cmd.Parameters.AddWithValue("@ESPECIALIDAD", e);
                 cmd.Parameters.AddWithValue("@CERTIFICACIONICF", co);
                 cmd.Parameters.AddWithValue("@METODOCOACHING", m);
@@ -117,16 +141,17 @@ namespace ProyectoIntegradorII.Controllers
                 {
                     ECoach obj = new ECoach()
                     {
-                        coach = dr.GetString(0),
-                        idEspecialidad = dr.GetInt32(1),
-                        especialidad = dr.GetString(2),
-                        idCertificacion = dr.GetInt32(3),
-                        certificacionICF = dr.GetString(4),
-                        idMetodo = dr.GetInt32(5),
-                        metodoCoaching = dr.GetString(6),
-                        idIdioma = dr.GetInt32(7),
-                        idioma = dr.GetString(8),
-                        pais = dr.GetString(9),
+                        idCoach = dr.GetInt32(0),
+                        coach = dr.GetString(1),
+                        idEspecialidad = dr.GetInt32(2),
+                        especialidad = dr.GetString(3),
+                        idCertificacion = dr.GetInt32(4),
+                        certificacionICF = dr.GetString(5),
+                        idMetodo = dr.GetInt32(6),
+                        metodoCoaching = dr.GetString(7),
+                        idIdioma = dr.GetInt32(8),
+                        idioma = dr.GetString(9),
+                        pais = dr.GetString(10),
                     };
                     temporal.Add(obj);
                 }
@@ -134,29 +159,66 @@ namespace ProyectoIntegradorII.Controllers
             return temporal;
         }
 
-        public async Task<IActionResult> Consultas(string e = "", string co = "", string m = "", string i = "")
+        public IActionResult EncontrarCoach()
         {
-            IEnumerable<ECoach> temporal = coaches(e, co, m, i);
+            try
+            {
+                ViewBag.e = new SelectList(especialidades(), "idEspecialidad", "descripcion");
+                ViewBag.co = new SelectList(certificacionesICF(), "idCertificacion", "certificacion");
+                ViewBag.m = new SelectList(metodos(), "idMetodo", "nombreMetodo");
+                ViewBag.i = new SelectList(idiomas(), "idIdioma", "idioma");
+            }
+            catch (Exception ex)
+            {
+                TempData["MSG"] = ex.Message;
+            }
 
-            ViewBag.especialidades = new SelectList(especialidades(), "idEspecialidad", "descripcion");
-            ViewBag.certificaciones = new SelectList(certificacionesICF(), "idCertificacion", "certificacion");
-            ViewBag.metodos = new SelectList(metodos(), "idMetodo", "nombreMetodo");
-            ViewBag.idiomas = new SelectList(idiomas(), "idIdioma", "idioma");
-
-            return View(await Task.Run(() => temporal));
+            return View();
         }
+        public IActionResult EncontrarCoaches(string e, string co, string m, string i, int pag = 1)
+        {
+            ViewBag.e = new SelectList(especialidades(), "idEspecialidad", "descripcion");
+            ViewBag.co = new SelectList(certificacionesICF(), "idCertificacion", "certificacion");
+            ViewBag.m = new SelectList(metodos(), "idMetodo", "nombreMetodo");
+            ViewBag.i = new SelectList(idiomas(), "idIdioma", "idioma");
 
-        //[HttpPost]
-        //public IActionResult GetCoach(string e = "", string co = "", string m = "", string i = "")
-        //{
-        //    return View();
-        //}
-        
-    
+            try
+            {
+                IEnumerable<ECoach> temporal = coaches(e, co, m, i);
 
-        //public IActionResult Index()
-        //    {
-        //        return View();
-        //    }
+                if (pag < 1)
+                {
+                    pag = 1;
+                }
+
+                const int pageSize = 5;
+
+                int recsCount = temporal.Count();
+
+                var pager = new Pager(recsCount, pag, pageSize);
+
+                int recSkip = (pag - 1) * pageSize;
+
+                int esp = Convert.ToInt32(e);
+                int coc = Convert.ToInt32(co);
+                int met = Convert.ToInt32(m);
+                int idi = Convert.ToInt32(i);
+
+                ViewBag.esp = esp;
+                ViewBag.coc = coc;
+                ViewBag.met = met;
+                ViewBag.idi = idi;
+
+                this.ViewBag.Pager = pager;
+
+                TempData["PartialCoach"] = temporal.Skip(recSkip).Take(pager.PageSize);
+            }
+            catch (Exception ex)
+            {
+                TempData["MSG"] = ex.Message;
+            }
+
+            return View("EncontrarCoach");
+        }
     }
 }

@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
 
+@font-face {
+    font-family: lemon;
+    src: url('../fuentes/LEMONMILK-Regular.otf') format('truetype');
+}
+
 h1 {
-    font-family: 'Koulen', cursive;
+    font-family: lemon;
     font-size: 50px;
-    margin-left: 90px;
+    margin-left: 52px;
     margin-bottom: 20px;
 }
 
@@ -32,7 +37,7 @@ body {
 
 .loginBox {
     position: absolute;
-    top: 50%;
+    top: 54%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 350px;
@@ -103,7 +108,8 @@ h3 {
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    text-decoration: none
+    text-decoration: none;
+    font-family: lemon;
 }
 
 .loginBox .input-limpiar {
@@ -121,17 +127,20 @@ h3 {
     border-radius: 20px;
     cursor: pointer;
     margin-bottom: 20px;
-    padding: 8px
+    padding: 8px;
+    font-family: lemon;
 }
 
 .loginBox input[type="submit"]:hover {
     color: white;
     background: #0000ff;
+    font-family: lemon;
 }
 
 .input-limpiar:hover {
     color: white;
     background: #0000ff;
+    font-family: lemon;
 }
 
 p {

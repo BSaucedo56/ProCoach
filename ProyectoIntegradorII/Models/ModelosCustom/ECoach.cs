@@ -4,6 +4,8 @@ namespace ProyectoIntegradorII.Models
 {
     public class ECoach
     {
+        public int idCoach { get; set; }
+
         [Display(Name = "Coach")]
         public string coach { get; set; }
 
