@@ -178,8 +178,10 @@
     border-style: solid;
     padding-left: 15px;
     padding-right: 15px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top:-3px;
+    margin-bottom:-3px;
 }
 
     .infCoach:hover {
@@ -192,8 +194,10 @@
         border-style: solid;
         padding-left: 15px;
         padding-right: 15px;
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        margin-top: -3px;
+        margin-bottom: -3px;
     }
 
 .solicoach {
@@ -206,8 +210,10 @@
     border-style: solid;
     padding-left: 15px;
     padding-right: 15px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: -3px;
+    margin-bottom: -3px;
 }
 
     .solicoach:hover {
@@ -220,8 +226,10 @@
         border-style: solid;
         padding-left: 15px;
         padding-right: 15px;
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        margin-top: -3px;
+        margin-bottom: -3px;
     }
 
 .main-coach {
@@ -240,4 +248,387 @@
     background-color: #1d97c9;
     color: #fff;
     font-weight: bold;
+}
+
+.modaltitulo {
+    font-family: lemon;
+    color: black;
+    margin-left: 130px;
+    font-size: 15px;
+    margin-bottom: -5px;
+    margin-top: -4px;
+}
+
+.modaltitulo2 {
+    font-family: lemon;
+    color: black;
+    font-size: 15px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+}
+
+.modalcoach {
+    font-family: lemon;
+    color: black;
+    margin-left: 190px;
+    font-size: 15px;
+    text-align: center;
+    margin-top: -215px;
+}
+
+.modalpais {
+    font-family: lemon;
+    color: black;
+    margin-left: 180px;
+    font-size: 15px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.modalidioma {
+    font-family: lemon;
+    color: black;
+    margin-left: 285px;
+    font-size: 15px;
+}
+
+.modaltelefono {
+    font-family: lemon;
+    color: black;
+    margin-left: 100px;
+    font-size: 15px;
+    margin-top: 25px;
+}
+
+.modalnumtelefono {
+    font-family: lemon;
+    color: black;
+    margin-left: 290px;
+    font-size: 15px;
+    margin-top: -38px;
+}
+
+.modalcorreo {
+    font-family: lemon;
+    color: black;
+    margin-left: -20px;
+    font-size: 15px;
+}
+
+.modaldescorreo {
+    font-family: lemon;
+    color: black;
+    margin-left: 270px;
+    font-size: 15px;
+    margin-top: -38px;
+}
+
+.modalcertificacion {
+    font-family: lemon;
+    color: black;
+    margin-left: -250px;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+.modaldescertificacion {
+    font-family: lemon;
+    color: black;
+    margin-left: 220px;
+    font-size: 14px;
+    margin-top: -35px;
+}
+
+.modalmetodos {
+    font-family: lemon;
+    color: black;
+    margin-left: -250px;
+    font-size: 14px;
+}
+
+.modaldesmetodos1 {
+    font-family: lemon;
+    color: black;
+    margin-left: 220px;
+    font-size: 14px;
+    margin-top: -38px;
+}
+
+.modaldesmetodos2 {
+    font-family: lemon;
+    color: black;
+    margin-left: 220px;
+    font-size: 14px;
+    margin-top: -8px;
+}
+
+.modaldesmetodos3 {
+    font-family: lemon;
+    color: black;
+    margin-left: 220px;
+    font-size: 14px;
+    margin-top: -8px;
+}
+
+.modalespecialidad {
+    font-family: lemon;
+    color: black;
+    margin-left: -255px;
+    font-size: 14px;
+}
+
+.modaldesespecialidad {
+    font-family: lemon;
+    color: black;
+    margin-left: 215px;
+    font-size: 14px;
+    margin-top: -35px;
+}
+
+.modalexperiencia {
+    font-family: lemon;
+    color: black;
+    margin-left: -255px;
+    font-size: 14px;
+}
+
+.modaldesexperiencia {
+    font-family: lemon;
+    color: black;
+    margin-left: 210px;
+    font-size: 14px;
+    margin-top: -38px;
+    margin-bottom: -25px;
+}
+
+.modalcerrar {
+    text-decoration: none;
+    background-color: darkturquoise;
+    font-size: 14px;
+    color: white;
+    font-family: lemon;
+    border-radius: 30px;
+    border-style: solid;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: -3px;
+    margin-bottom: -3px;
+    margin-right: 200px;
+}
+
+    .modalcerrar:hover {
+        text-decoration: none;
+        background-color: darkcyan;
+        color: white;
+        font-size: 14px;
+        font-family: lemon;
+        border-radius: 30px;
+        border-style: solid;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        margin-top: -3px;
+        margin-right: 200px;
+    }
+
+.lineaxd {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #000000;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+}
+
+.h2modalcoach {
+    font-family: lemon;
+    font-size: 15px;
+    color: black;
+    display: inline;
+    margin-left: 142px;
+}
+
+.h2modalcoachnombre {
+    font-family: lemon;
+    color: black;
+    margin-left: 190px;
+    font-size: 15px;
+    text-align: center;
+    margin-top: -22px;
+    margin-bottom: -25px;
+}
+
+.h2modalcoachsesion {
+    font-family: lemon;
+    font-size: 15px;
+    color: black;
+    display: inline;
+    margin-left: 75px;
+}
+
+.h2modalcoachservicio {
+    font-family: lemon;
+    font-size: 15px;
+    color: black;
+    display: inline;
+    margin-left: 60px;
+}
+
+.h2modalprecio {
+    font-family: lemon;
+    font-size: 15px;
+    color: black;
+    display: inline;
+    margin-right: 10px;
+    margin-left: 130px;
+}
+
+.h2modalcantsesiones {
+    font-family: lemon;
+    font-size: 15px;
+    color: black;
+    display: inline;
+    margin-right: -118px;
+    margin-left: 18px;
+}
+
+.h2modalcanthoras {
+    font-family: lemon;
+    font-size: 15px;
+    color: black;
+    display: inline;
+    margin-right: 10px;
+    margin-left: 28px;
+}
+
+.h2modalcoachmonto {
+    font-family: lemon;
+    font-size: 15px;
+    color: black;
+    display: inline;
+    margin-right: 10px;
+    margin-left: 130px;
+}
+
+.modalcoachsesiondes {
+    font-size: 15px;
+    display: inline;
+}
+.modalcoachserviciodes {
+    font-size: 15px;
+    display: inline;
+}
+.modalpreciodes {
+    font-size: 15px;
+    display: inline;
+    padding: 0px;
+}
+.modalcantsesionesdes {
+    font-size: 15px;
+    display: inline;
+    padding-left: 119px;
+}
+
+.modalcanthorasdes {
+    font-size: 15px;
+    display: inline;
+    padding: 0px;
+}
+
+.modalcoachmontodes {
+    font-size: 15px;
+    display: inline;
+    padding: 0px;
+    margin-bottom: 10px;
+}
+
+.modalsoliaceptar {
+    text-decoration: none;
+    background-color: darkturquoise;
+    font-size: 14px;
+    color: white;
+    font-family: lemon;
+    border-radius: 30px;
+    border-style: solid;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 5px;
+    margin-bottom: -20px;
+    margin-right: 280px;
+}
+
+    .modalsoliaceptar:hover {
+        text-decoration: none;
+        background-color: darkcyan;
+        color: white;
+        font-size: 14px;
+        font-family: lemon;
+        border-radius: 30px;
+        border-style: solid;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        margin-top: 5px;
+        margin-bottom: -20px;
+        margin-right: 280px;
+    }
+
+.modalsolicancelar {
+    text-decoration: none;
+    background-color: darkturquoise;
+    font-size: 14px;
+    color: white;
+    font-family: lemon;
+    border-radius: 30px;
+    border-style: solid;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: -10px;
+    margin-bottom: -10px;
+    margin-right: 70px;
+}
+
+    .modalsolicancelar:hover {
+        text-decoration: none;
+        background-color: darkcyan;
+        color: white;
+        font-size: 14px;
+        font-family: lemon;
+        border-radius: 30px;
+        border-style: solid;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        margin-top: -10px;
+        margin-bottom: -10px;
+        margin-right: 70px;
+    }
+
+.modaltitulosoli {
+    font-family: lemon;
+    color: black;
+    margin-left: 125px;
+    font-size: 25px;
+    margin-bottom: -5px;
+    margin-top: -4px;
+}
+
+.modaltituloinsert {
+    font-family: lemon;
+    color: black;
+    margin-left: 100px;
+    font-size: 25px;
+    margin-bottom: -5px;
+    margin-top: -4px;
 }

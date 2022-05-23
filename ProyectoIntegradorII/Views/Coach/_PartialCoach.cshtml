@@ -67,10 +67,17 @@
                 @Html.DisplayFor(modelItem => item.pais)
             </td>
             <td>
-                @Html.ActionLink("Info", "InfoParcial", new { id=item.idCoach }, new  {@class = "infCoach"})
+                <!-- Button trigger modal -->
+                <button type="button" class="infCoach" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                    Info
+                </button>
+                @* @Html.ActionLink("Info", "InfoParcial", new { id=item.idCoach }, new  {@class = "infCoach"})*@
             </td>
             <td>
-                @Html.ActionLink("Solicitar", "Solicitar", new { id=item.idCoach }, new  {@class = "solicoach"})
+                <button type="button" class="solicoach" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Solicitar
+                </button>
+                @*@Html.ActionLink("Solicitar", "Solicitar", new { id=item.idCoach }, new  {@class = "solicoach"})*@
             </td>
         </tr>
 }
@@ -85,7 +92,7 @@
             @if (pager.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="1" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Primero</a>
+                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="1" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">First</a>
                 </li>
                 <li>
                     <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.CurrentPage - 1)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">&lt;</a>
@@ -105,9 +112,195 @@
                     <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.CurrentPage+1)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">&gt;</a>
                 </li>
                 <li>
-                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.TotalPages)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Último</a>
+                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.TotalPages)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Last</a>
                 </li>
             }
         </ul>    
     }
+</div>
+
+<!-- Modal Info-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="lineaxd">
+        <h5 class="modaltitulo" id="exampleModalLongTitle">INFORMACIÓN PERSONAL</h5>
+      </div>
+      <div class="modal-body">
+        <img src="https://picsum.photos/id/237/200/300" alt="FotoCoach" width="170" height="250">
+        <h2 class="modalcoach">Javier Fernandez Aguado</h2>
+            <h5 class="modalpais">Perú</h5>
+            <h6 class="modalidioma">(Español)</h6>
+        <h3 class="modaltelefono">Telefono:</h3>
+            <h3 class="modalnumtelefono">975434310</h3>
+        <h3 class="modalcorreo">Correo:</h3>
+            <h3 class="modaldescorreo">Javier1999@gmail.com</h3>
+        <div class="lineaxd"></div>
+        <div class="lineaxd">
+            <h5 class="modaltitulo2" id="exampleModalLongTitle">PERFIL PROFESIONAL:</h5>	
+        </div>
+        <h3 class="modalcertificacion">Certificación icf:</h3>
+            <h3 class="modaldescertificacion">Coach Master Certificado</h3>
+        <h3 class="modalmetodos">Métodos Coaching:</h3>
+            <h3 class="modaldesmetodos1">Corporativo</h3>
+            <h3 class="modaldesmetodos2">En Persona</h3>
+            <h3 class="modaldesmetodos3">Talleres / Seminarios</h3>
+        <h3 class="modalespecialidad">Especialidad:</h3>
+            <h3 class="modaldesespecialidad">Coaching a estudiantes Universitarios</h3>
+        <h3 class="modalexperiencia">Experiencia:</h3>
+            <h3 class="modaldesexperiencia">3 Años</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modalcerrar" data-bs-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Solicitar-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="lineaxd">
+        <h5 class="modaltitulosoli" id="exampleModalLabel">SOLICITAR COACH</h5>
+      </div>
+      <div class="modal-body">
+@using(Html.BeginForm("EncontrarCoaches","Coach"))
+{
+    @Html.AntiForgeryToken()
+
+    <div id="solicitarcoach">
+        <h2 class="h2modalcoach">Coach:</h2>
+            <h2 class="h2modalcoachnombre">Javier Fernandez Aguado</h2>
+        <br />
+        <br />
+        <h2 class="h2modalcoachsesion">Tipo de Sesión:</h2>
+            <div class="modalcoachsesiondes">
+            @Html.DropDownList("co", null, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalcoachservicio">Tipo de Servicio:</h2>
+            <div class="modalcoachserviciodes">
+            @Html.DropDownList("co", null, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalprecio">Precio:</h2>
+            <div class="modalpreciodes">
+            @Html.TextBox("y1", 320, new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalcantsesiones">Cantidad de Sesiones:</h2>
+            <div class="modalcantsesionesdes">
+            @Html.DropDownList("co", null, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalcanthoras">Cantidad de Horas:</h2>
+            <div class="modalcanthorasdes">
+            @Html.TextBox("y1", 1, new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalcoachmonto">Monto:</h2>
+            <div class="modalcoachmontodes">
+            @Html.TextBox("y1", 320, new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
+            </div>
+        <br />
+        <br />
+    @*    <input type="submit" name="name" value="Buscar" class="botonBuscar" />*@
+        <div class="modal-footer">
+        <button type="button" class="modalsoliaceptar" data-bs-toggle="modal" data-bs-target="#exampleModal2">Aceptar</button>
+        <button type="button" class="modalsolicancelar" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+}
+        @*<form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>*@
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ingresar Datos-->
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="lineaxd">
+        <h5 class="modaltituloinsert" id="exampleModalLabel">INGRESE SUS DATOS</h5>
+      </div>
+      <div class="modal-body">
+        <form asp-action="INSERTARCLIENTE">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           @* <div class="form-group">
+                <label asp-for="idcliente" class="control-label"></label>
+                <input asp-for="idcliente" class="form-control" />
+                <span asp-validation-for="idcliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label"></label>
+                <input asp-for="nombre" class="form-control" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="direccion" class="control-label"></label>
+                <input asp-for="direccion" class="form-control" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idpais" class="control-label"></label>
+                <select asp-for="idpais" asp-items="@ViewBag.paises" class="form-select"></select>
+                <span asp-validation-for="idpais" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fono" class="control-label"></label>
+                <input asp-for="fono" class="form-control" />
+                <span asp-validation-for="fono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="credito" class="control-label"></label>
+                <input asp-for="credito" class="form-control" />
+                <span asp-validation-for="credito" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <div class="modal-footer">
+                    <input type="submit" value="Registrar" class="modalsoliaceptar" />
+                    <button type="button" class="modalsolicancelar" data-bs-dismiss="modal" >Regresar</button>
+                </div>
+            </div>
+        </form>
+        @*<br />
+        <br />
+    @*    <input type="submit" name="name" value="Buscar" class="botonBuscar" />*@
+        @*<div class="modal-footer">
+        <button type="button" class="modalsoliaceptar">Registrar</button>
+        <button type="button" class="modalsolicancelar" data-bs-dismiss="modal" >Regresar</button>
+      </div>*@
+    </div>
+}
+        @*<form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>*@
+      </div>
+    </div>
+  </div>
 </div>
