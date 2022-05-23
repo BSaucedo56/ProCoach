@@ -5,6 +5,18 @@
     src: url('../fuentes/LEMONMILK-Regular.otf') format('truetype');
 }
 
+.bodyencontrarcoach {
+    margin: 0;
+    padding: 0;
+    background: url(https://i.imgur.com/qlkT19M.png) no-repeat;
+    height: 100vh;
+    font-family: sans-serif;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden
+}
+
 .hcoach {
     font-family: lemon;
     color: white;
@@ -19,6 +31,7 @@
     color: white;
     display: inline;
     margin-left: 67px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .h2coach2 {
@@ -27,6 +40,7 @@
     color: white;
     display: inline;
     margin-left: 30px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .h2coach3 {
@@ -35,6 +49,7 @@
     color: white;
     display: inline;
     margin-left: -5px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .h2coach4 {
@@ -44,29 +59,34 @@
     display: inline;
     margin-right: -120px;
     margin-left: 118px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .Select1 {
     font-size: 15px;
     display: inline;
     margin: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .Select2 {
     font-size: 15px;
     display: inline;
     margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .Select3 {
     font-size: 15px;
     display: inline;
     margin: 10px;
     padding: 0px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .Select4 {
     font-size: 15px;
     display: inline;
     margin: 10px;
-    padding-left: 119px;
+    margin-left: 132px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .thcoach11 {
@@ -150,6 +170,7 @@
     padding-right: 22px;
     margin-bottom: -200px;
     margin-top: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
     .botonBuscar:hover {
@@ -166,6 +187,7 @@
         padding-right: 22px;
         margin-bottom: -200px;
         margin-top: 15px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
 .infCoach {
@@ -416,6 +438,7 @@
     margin-top: -3px;
     margin-bottom: -3px;
     margin-right: 200px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
     .modalcerrar:hover {
@@ -432,6 +455,7 @@
         padding-bottom: 3px;
         margin-top: -3px;
         margin-right: 200px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 
 .lineaxd {
@@ -562,6 +586,7 @@
     margin-top: 5px;
     margin-bottom: -20px;
     margin-right: 280px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
     .modalsoliaceptar:hover {
@@ -579,6 +604,7 @@
         margin-top: 5px;
         margin-bottom: -20px;
         margin-right: 280px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 
 .modalsolicancelar {
@@ -596,6 +622,7 @@
     margin-top: -10px;
     margin-bottom: -10px;
     margin-right: 70px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
     .modalsolicancelar:hover {
@@ -613,6 +640,7 @@
         margin-top: -10px;
         margin-bottom: -10px;
         margin-right: 70px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 
 .modaltitulosoli {

@@ -12,10 +12,10 @@ h1 {
     margin-bottom: 20px;
 }
 
-body {
+.bodylogin {
     margin: 0;
     padding: 0;
-    background: url(https://i.imgur.com/nFaINK9.jpg) no-repeat;
+    background: url(https://i.imgur.com/890DUGN.png) no-repeat;
     height: 100vh;
     font-family: sans-serif;
     background-size: cover;

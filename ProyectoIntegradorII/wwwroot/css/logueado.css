@@ -1,3 +1,15 @@
+.bodylogueado {
+    margin: 0;
+    padding: 0;
+    background: url(https://i.imgur.com/UI8k1m2.jpg) no-repeat;
+    height: 100vh;
+    font-family: sans-serif;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden
+}
+
 @keyframes swing {
     0% {
         transform: rotate(0deg);
@@ -429,7 +441,7 @@ body {
 /*-----------------------------chiller-theme-------------------------------------------------*/
 
 .chiller-theme .sidebar-wrapper {
-    background: #31353D;
+    background-color: rgba(48,48,48,1);
 }
 
     .chiller-theme .sidebar-wrapper .sidebar-header,
