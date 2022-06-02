@@ -220,5 +220,53 @@ namespace ProyectoIntegradorII.Controllers
 
             return View("EncontrarCoach");
         }
+
+        //INFO COACH
+
+        IEnumerable<ECoach> coachinfo()
+        {
+
+            List<ECoach> temporal = new List<ECoach>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+            {
+                SqlCommand cmd = new SqlCommand("exec USP_LISTAR_INFCOACHES", cn);
+                cn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    ECoach obj = new ECoach()
+                    {
+                        urlAvatar = dr.GetString(0),
+                        idCoach = dr.GetInt32(1),
+                        coach = dr.GetString(2),
+                        idPais = dr.GetInt32(3),
+                        pais = dr.GetString(4),
+                        idIdioma = dr.GetInt32(5),
+                        idioma = dr.GetString(6),
+                        telefono = dr.GetString(7),
+                        correo = dr.GetString(8),
+                        idCertificacion = dr.GetInt32(9),
+                        certificacionICF = dr.GetString(10),
+                        idMetodo = dr.GetInt32(11),
+                        metodoCoaching = dr.GetString(12),
+                        idEspecialidad = dr.GetInt32(13),
+                        especialidad = dr.GetString(14),
+                        idExperiencia = dr.GetInt32(15),
+                        anioExperiencia = dr.GetString(16),
+                    };
+                    temporal.Add(obj);
+                }
+            }
+            return temporal;
+        }
+
+        public IActionResult InfoCoach(int id)
+        {
+            var inf = coachinfo().Where(c => c.idCoach == id).FirstOrDefault();
+            return PartialView("_PartialCoachInfo", inf);
+        }
     }
 }

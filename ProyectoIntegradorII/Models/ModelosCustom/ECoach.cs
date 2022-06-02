@@ -4,6 +4,7 @@ namespace ProyectoIntegradorII.Models
 {
     public class ECoach
     {
+        public string urlAvatar { get; set; }
         public int idCoach { get; set; }
 
         [Display(Name = "Coach")]
@@ -29,7 +30,17 @@ namespace ProyectoIntegradorII.Models
         [Display(Name = "Idioma")]
         public string idioma { get; set; }
 
+        public int idPais { get; set; }
+
         [Display(Name = "Pais")]
         public string pais { get; set; }
+
+        public string telefono { get; set; }
+
+        public string correo { get; set; }
+
+        public int idExperiencia { get; set; }
+
+        public string anioExperiencia { get; set; }
     }
 }

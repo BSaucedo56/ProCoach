@@ -1,0 +1,55 @@
+﻿@model ECoach
+
+<!-- Modal Info-->
+<div class="modal fade" id="modalInfoCoach" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="lineaxd">
+      <h5 class="modaltitulo" id="exampleModalLongTitle">INFORMACIÓN PERSONAL</h5>
+      </div>
+      <div class="modal-body">
+        <img src="@Model.urlAvatar" alt="FotoCoach" width="170" height="250">
+        <h2 class="modalcoach" asp-for="coach">
+            @Model.coach
+        </h2>
+        <h5 class="modalpais" asp-for="pais">
+            @Model.pais
+        </h5>
+        <h6 class="modalidioma" asp-for="idioma">
+            @Model.idioma
+        </h6>
+        <h3 class="modaltelefono">Telefono:</h3>
+        <h3 class="modalnumtelefono" asp-for="telefono">
+            @Model.telefono
+        </h3>
+        <h3 class="modalcorreo">Correo:</h3>
+        <h3 class="modaldescorreo" asp-for="correo">
+            @Model.correo
+        </h3>
+        <div class="lineaxd"></div>
+        <div class="lineaxd">
+            <h5 class="modaltitulo2" id="exampleModalLongTitle">PERFIL PROFESIONAL</h5>	
+        </div>
+        <h3 class="modalcertificacion">Certificación icf:</h3>
+        <h3 class="modaldescertificacion" asp-for="certificacionICF">
+            @Model.certificacionICF
+        </h3>
+        <h3 class="modalmetodos">Métodos Coaching:</h3>
+            <h3 class="modaldesmetodos1" asp-for="metodoCoaching">
+                @Model.metodoCoaching
+            </h3>
+        <h3 class="modalespecialidad">Especialidad:</h3>
+        <h3 class="modaldesespecialidad" asp-for="especialidad">
+            @Model.especialidad
+        </h3>
+        <h3 class="modalexperiencia">Experiencia:</h3>
+        <h3 class="modaldesexperiencia" asp-for="anioExperiencia">
+            @Model.anioExperiencia
+        </h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modalcerrar" data-bs-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
+</div>

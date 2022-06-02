@@ -67,17 +67,16 @@
                 @Html.DisplayFor(modelItem => item.pais)
             </td>
             <td>
-                <!-- Button trigger modal -->
-                <button type="button" class="infCoach" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                <div id="PlaceHolderHere"></div>
+                
+                <button type="button" class="infCoach" data-bs-toggle="modal" data-bs-target="#modalInfoCoach" data-url="@Url.Action($"InfoCoach/{item.idCoach}")">
                     Info
                 </button>
-                @* @Html.ActionLink("Info", "InfoParcial", new { id=item.idCoach }, new  {@class = "infCoach"})*@
             </td>
             <td>
                 <button type="button" class="solicoach" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Solicitar
                 </button>
-                @*@Html.ActionLink("Solicitar", "Solicitar", new { id=item.idCoach }, new  {@class = "solicoach"})*@
             </td>
         </tr>
 }
@@ -117,44 +116,6 @@
             }
         </ul>    
     }
-</div>
-
-<!-- Modal Info-->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="lineaxd">
-        <h5 class="modaltitulo" id="exampleModalLongTitle">INFORMACIÓN PERSONAL</h5>
-      </div>
-      <div class="modal-body">
-        <img src="https://picsum.photos/id/237/200/300" alt="FotoCoach" width="170" height="250">
-        <h2 class="modalcoach">Javier Fernandez Aguado</h2>
-            <h5 class="modalpais">Perú</h5>
-            <h6 class="modalidioma">(Español)</h6>
-        <h3 class="modaltelefono">Telefono:</h3>
-            <h3 class="modalnumtelefono">975434310</h3>
-        <h3 class="modalcorreo">Correo:</h3>
-            <h3 class="modaldescorreo">Javier1999@gmail.com</h3>
-        <div class="lineaxd"></div>
-        <div class="lineaxd">
-            <h5 class="modaltitulo2" id="exampleModalLongTitle">PERFIL PROFESIONAL:</h5>	
-        </div>
-        <h3 class="modalcertificacion">Certificación icf:</h3>
-            <h3 class="modaldescertificacion">Coach Master Certificado</h3>
-        <h3 class="modalmetodos">Métodos Coaching:</h3>
-            <h3 class="modaldesmetodos1">Corporativo</h3>
-            <h3 class="modaldesmetodos2">En Persona</h3>
-            <h3 class="modaldesmetodos3">Talleres / Seminarios</h3>
-        <h3 class="modalespecialidad">Especialidad:</h3>
-            <h3 class="modaldesespecialidad">Coaching a estudiantes Universitarios</h3>
-        <h3 class="modalexperiencia">Experiencia:</h3>
-            <h3 class="modaldesexperiencia">3 Años</h3>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="modalcerrar" data-bs-dismiss="modal">CERRAR</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- Modal Solicitar-->
