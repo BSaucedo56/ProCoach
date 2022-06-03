@@ -256,6 +256,7 @@ namespace ProyectoIntegradorII.Controllers
                         especialidad = dr.GetString(14),
                         idExperiencia = dr.GetInt32(15),
                         anioExperiencia = dr.GetString(16),
+                        precio = dr.GetInt32(17),
                     };
                     temporal.Add(obj);
                 }
@@ -267,6 +268,12 @@ namespace ProyectoIntegradorII.Controllers
         {
             var inf = coachinfo().Where(c => c.idCoach == id).FirstOrDefault();
             return PartialView("_PartialCoachInfo", inf);
+        }
+
+        public IActionResult SoliCoach(int id)
+        {
+            var inf = coachinfo().Where(c => c.idCoach == id).FirstOrDefault();
+            return PartialView("_PartialCoachSolicitar", inf);
         }
     }
 }

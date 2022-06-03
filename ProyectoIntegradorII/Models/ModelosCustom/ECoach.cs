@@ -42,5 +42,7 @@ namespace ProyectoIntegradorII.Models
         public int idExperiencia { get; set; }
 
         public string anioExperiencia { get; set; }
+
+        public int precio { get; set; }
     }
 }

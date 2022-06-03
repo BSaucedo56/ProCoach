@@ -74,7 +74,7 @@
                 </button>
             </td>
             <td>
-                <button type="button" class="solicoach" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="solicoach" data-bs-toggle="modal" data-bs-target="#modalSolicitarCoach" data-url="@Url.Action($"SoliCoach/{item.idCoach}")">
                     Solicitar
                 </button>
             </td>
@@ -120,7 +120,7 @@
 
 <!-- Modal Solicitar-->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+@*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="lineaxd">
@@ -173,12 +173,12 @@
         <br />
         <br />
     @*    <input type="submit" name="name" value="Buscar" class="botonBuscar" />*@
-        <div class="modal-footer">
+       @* <div class="modal-footer">
         <button type="button" class="modalsoliaceptar" data-bs-toggle="modal" data-bs-target="#exampleModal2">Aceptar</button>
         <button type="button" class="modalsolicancelar" data-bs-dismiss="modal">Cancelar</button>
       </div>
     </div>
-}
+}*@
         @*<form>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Recipient:</label>
@@ -189,14 +189,14 @@
             <textarea class="form-control" id="message-text"></textarea>
           </div>
         </form>*@
-      </div>
+@*      </div>
     </div>
   </div>
-</div>
+</div>*@
 
 <!-- Modal Ingresar Datos-->
 
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalInsertarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="lineaxd">

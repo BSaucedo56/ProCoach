@@ -1,0 +1,167 @@
+﻿@model ECoach
+
+@{
+    var listado = new List<SelectListItem>()
+    {
+        new SelectListItem()
+        {
+            Text = "Seleccione una opción",
+            Value = "-1",
+            Selected = true,
+            Disabled = true
+        },
+        new SelectListItem()
+        {
+            Text = "Referencia Estrategica",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "Coaching",
+            Value = "2"
+        }
+    };
+    var listado2 = new List<SelectListItem>()
+    {
+        new SelectListItem()
+        {
+            Text = "Seleccione una opción",
+            Value = "-1",
+            Selected = true,
+            Disabled = true
+        },
+        new SelectListItem()
+        {
+            Text = "Individual",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "Paquete",
+            Value = "2"
+        }
+    };
+    var listado3 = new List<SelectListItem>()
+    {
+        new SelectListItem()
+        {
+            Text = "Seleccione una opción",
+            Value = "-1",
+            Selected = true,
+            Disabled = true
+        },
+        new SelectListItem()
+        {
+            Text = "1",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "2",
+            Value = "2"
+        },
+        new SelectListItem()
+        {
+            Text = "3",
+            Value = "3"
+        },
+        new SelectListItem()
+        {
+            Text = "4",
+            Value = "4"
+        },
+        new SelectListItem()
+        {
+            Text = "5",
+            Value = "5"
+        }
+    };
+    var listado4 = new List<SelectListItem>()
+    {
+        new SelectListItem()
+        {
+            Text = "Seleccione una opción",
+            Value = "-1",
+            Selected = true,
+            Disabled = true
+        },
+        new SelectListItem()
+        {
+            Text = "1",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "2",
+            Value = "2"
+        },
+        new SelectListItem()
+        {
+            Text = "3",
+            Value = "3"
+        }
+    };
+}
+
+<!-- Modal Solicitar-->
+
+<div class="modal fade" id="modalSolicitarCoach" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="lineaxd">
+        <h5 class="modaltitulosoli" id="exampleModalLabel">SOLICITAR COACH</h5>
+      </div>
+      <div class="modal-body">
+
+
+    <div id="solicitarcoach">
+        <h2 class="h2modalcoach">Coach:</h2>
+            <h2 class="h2modalcoachnombre" asp-for="coach">@Model.coach</h2>
+        <br />
+        <br />
+        <h2 class="h2modalcoachsesion">Tipo de Sesión:</h2>
+            <div class="modalcoachsesiondes">
+            @Html.DropDownList("miDropDownList", listado , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalcoachservicio">Tipo de Servicio:</h2>
+            <div class="modalcoachserviciodes">
+            @Html.DropDownList("miDropDownList", listado2 , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalprecio">Precio:</h2>
+            <div class="modalpreciodes">
+            @Html.TextBox("precio", @Model.precio , new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalcantsesiones">Cantidad de Sesiones:</h2>
+            <div class="modalcantsesionesdes">
+            @Html.DropDownList("cantidadsesiones", listado3, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalcanthoras">Cantidad de Horas:</h2>
+            <div class="modalcanthorasdes">
+            @Html.DropDownList("cantidadhoras", listado4, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            </div>
+        <br />
+        <br />
+        <h2 class="h2modalcoachmonto">Monto:</h2>
+            <div class="modalcoachmontodes">
+            @Html.TextBox("monto", 320, new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
+            </div>
+        <br />
+        <br />
+
+        <div class="modal-footer">
+        <button type="button" class="modalsoliaceptar" data-bs-toggle="modal" data-bs-target="#modalInsertarCliente">Siguiente</button>
+        <button type="button" class="modalsolicancelar" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
