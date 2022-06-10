@@ -108,7 +108,7 @@
 
 <!-- Modal Solicitar-->
 
-<div class="modal fade" id="modalSolicitarCoach" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalSolicitarCoach" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="lineaxd">
@@ -161,7 +161,7 @@
 
         <div class="modal-footer">
         <button type="button" class="modalsoliaceptar" data-bs-toggle="modal" data-bs-target="#modalInsertarCliente">Siguiente</button>
-        <button type="button" class="modalsolicancelar" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="modalsolicancelar" data-bs-dismiss="modal" onClick = "cerrarModal()">Cancelar</button>
       </div>
     </div>
       </div>
@@ -187,6 +187,29 @@
    
 </script>
 <script>
+    $("#sesion").change(function () {
+        if (document.getElementById('sesion').value == "1") {
+            $("#servicio").val(1);
+            document.getElementById("servicio").disabled = true;
+            $("#cantsesiones").val(1);
+            document.getElementById("cantsesiones").disabled = true;
+            $("#canthoras").val(1);
+            document.getElementById("canthoras").disabled = true;
+        }
+        if (document.getElementById('sesion').value == "2" && document.getElementById('servicio').value == "1") {
+            document.getElementById("servicio").disabled = false;
+            $("#cantsesiones").val(1);
+            document.getElementById("cantsesiones").disabled = true;
+            $("#canthoras").val(1);
+            document.getElementById("canthoras").disabled = true;
+        }
+        if (document.getElementById('sesion').value == "2" && document.getElementById('servicio').value == "2") {
+            document.getElementById("cantsesiones").disabled = false;
+            document.getElementById("canthoras").disabled = false;
+        }
+    });      
+</script>
+<script>
 
     $(document).change(function(event){
       //Capturo el valor de cantSesiones,cantHoras y precio
@@ -199,7 +222,7 @@
         var resultado = 0;
       }else{
         //Si los tres ya tienen valor, hago operacion de los tres valores
-        var resultado = (parseInt(precio) * parseInt(cantSesiones)) * parseInt(cantHoras);
+        var resultado = parseInt(precio) * parseInt(cantSesiones) * parseInt(cantHoras);
       }
       //Muestro el resultado
         document.getElementById("monto").value = resultado;

@@ -18,17 +18,28 @@ namespace ProyectoIntegradorII.Controllers
 
             using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_ESPECIALIDAD", cn); // Select a la tabla especialidad
-                cn.Open(); //Abrir la conexión
-                SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
-                while (dr.Read()) //Lee cada uno de los registros
+                try
                 {
-                    Especialidad obj = new Especialidad()
+                    SqlCommand cmd = new SqlCommand("exec USP_ESPECIALIDAD", cn); // Select a la tabla especialidad
+                    cn.Open(); //Abrir la conexión
+                    SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
+                    while (dr.Read()) //Lee cada uno de los registros
                     {
-                        idEspecialidad = dr.GetInt32(0),
-                        descripcion = dr.GetString(1),
-                    };
-                    temporal.Add(obj); //crea cada elemento en temporal
+                        Especialidad obj = new Especialidad()
+                        {
+                            idEspecialidad = dr.GetInt32(0),
+                            descripcion = dr.GetString(1),
+                        };
+                        temporal.Add(obj); //crea cada elemento en temporal
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
                 }
             }
             return temporal;
@@ -42,17 +53,28 @@ namespace ProyectoIntegradorII.Controllers
 
             using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_CERTIFICACIONICF", cn); // Select a la tabla certificacionicf
-                cn.Open(); //ACTIVA LA CONEXIÓN
-                SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
-                while (dr.Read()) //Lee cada uno de los registros
+                try
                 {
-                    CertificacionICF obj = new CertificacionICF()
+                    SqlCommand cmd = new SqlCommand("exec USP_CERTIFICACIONICF", cn); // Select a la tabla certificacionicf
+                    cn.Open(); //ACTIVA LA CONEXIÓN
+                    SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
+                    while (dr.Read()) //Lee cada uno de los registros
                     {
-                        idCertificacion = dr.GetInt32(0),
-                        certificacion = dr.GetString(1),
-                    };
-                    temporal.Add(obj); //crea cada elemento en temporal
+                        CertificacionICF obj = new CertificacionICF()
+                        {
+                            idCertificacion = dr.GetInt32(0),
+                            certificacion = dr.GetString(1),
+                        };
+                        temporal.Add(obj); //crea cada elemento en temporal
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
                 }
             }
             return temporal;
@@ -66,17 +88,28 @@ namespace ProyectoIntegradorII.Controllers
 
             using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_METODOSCOACHING", cn); // Select a la tabla metodo
-                cn.Open(); //ACTIVA LA CONEXIÓN
-                SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
-                while (dr.Read()) //Lee cada uno de los registros
+                try
                 {
-                    Metodo obj = new Metodo()
+                    SqlCommand cmd = new SqlCommand("exec USP_METODOSCOACHING", cn); // Select a la tabla metodo
+                    cn.Open(); //ACTIVA LA CONEXIÓN
+                    SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
+                    while (dr.Read()) //Lee cada uno de los registros
                     {
-                        idMetodo = dr.GetInt32(0),
-                        nombreMetodo = dr.GetString(1),
-                    };
-                    temporal.Add(obj); //crea cada elemento en temporal
+                        Metodo obj = new Metodo()
+                        {
+                            idMetodo = dr.GetInt32(0),
+                            nombreMetodo = dr.GetString(1),
+                        };
+                        temporal.Add(obj); //crea cada elemento en temporal
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
                 }
             }
             return temporal;
@@ -90,17 +123,28 @@ namespace ProyectoIntegradorII.Controllers
 
             using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_IDIOMA", cn); // Select a la tabla idioma
-                cn.Open(); //ACTIVA LA CONEXIÓN
-                SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
-                while (dr.Read()) // MIENTRAS SE LEA LAS FILAS
+                try
                 {
-                    Idioma obj = new Idioma()
+                    SqlCommand cmd = new SqlCommand("exec USP_IDIOMA", cn); // Select a la tabla idioma
+                    cn.Open(); //ACTIVA LA CONEXIÓN
+                    SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
+                    while (dr.Read()) // MIENTRAS SE LEA LAS FILAS
                     {
-                        idIdioma = dr.GetInt32(0),
-                        idioma = dr.GetString(1),
-                    };
-                    temporal.Add(obj); //crea cada elemento en temporal
+                        Idioma obj = new Idioma()
+                        {
+                            idIdioma = dr.GetInt32(0),
+                            idioma = dr.GetString(1),
+                        };
+                        temporal.Add(obj); //crea cada elemento en temporal
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
                 }
             }
             return temporal;
@@ -131,30 +175,41 @@ namespace ProyectoIntegradorII.Controllers
 
             using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_ENCONTRAR_COACH @ESPECIALIDAD,@CERTIFICACIONICF,@METODOCOACHING,@IDIOMA", cn);
-                cmd.Parameters.AddWithValue("@ESPECIALIDAD", e);
-                cmd.Parameters.AddWithValue("@CERTIFICACIONICF", co);
-                cmd.Parameters.AddWithValue("@METODOCOACHING", m);
-                cmd.Parameters.AddWithValue("@IDIOMA", i);
-                cn.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    ECoach obj = new ECoach()
+                    SqlCommand cmd = new SqlCommand("exec USP_ENCONTRAR_COACH @ESPECIALIDAD,@CERTIFICACIONICF,@METODOCOACHING,@IDIOMA", cn);
+                    cmd.Parameters.AddWithValue("@ESPECIALIDAD", e);
+                    cmd.Parameters.AddWithValue("@CERTIFICACIONICF", co);
+                    cmd.Parameters.AddWithValue("@METODOCOACHING", m);
+                    cmd.Parameters.AddWithValue("@IDIOMA", i);
+                    cn.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
                     {
-                        idCoach = dr.GetInt32(0),
-                        coach = dr.GetString(1),
-                        idEspecialidad = dr.GetInt32(2),
-                        especialidad = dr.GetString(3),
-                        idCertificacion = dr.GetInt32(4),
-                        certificacionICF = dr.GetString(5),
-                        idMetodo = dr.GetInt32(6),
-                        metodoCoaching = dr.GetString(7),
-                        idIdioma = dr.GetInt32(8),
-                        idioma = dr.GetString(9),
-                        pais = dr.GetString(10),
-                    };
-                    temporal.Add(obj);
+                        ECoach obj = new ECoach()
+                        {
+                            idCoach = dr.GetInt32(0),
+                            coach = dr.GetString(1),
+                            idEspecialidad = dr.GetInt32(2),
+                            especialidad = dr.GetString(3),
+                            idCertificacion = dr.GetInt32(4),
+                            certificacionICF = dr.GetString(5),
+                            idMetodo = dr.GetInt32(6),
+                            metodoCoaching = dr.GetString(7),
+                            idIdioma = dr.GetInt32(8),
+                            idioma = dr.GetString(9),
+                            pais = dr.GetString(10),
+                        };
+                        temporal.Add(obj);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
                 }
             }
             return temporal;
@@ -205,6 +260,8 @@ namespace ProyectoIntegradorII.Controllers
                 int met = Convert.ToInt32(m);
                 int idi = Convert.ToInt32(i);
 
+                ViewBag.cantidad = temporal.Count();
+
                 ViewBag.esp = esp;
                 ViewBag.coc = coc;
                 ViewBag.met = met;
@@ -233,41 +290,52 @@ namespace ProyectoIntegradorII.Controllers
 
             using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
             {
-                SqlCommand cmd = new SqlCommand("exec USP_LISTAR_INFCOACHES", cn);
-                cn.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    ECoach obj = new ECoach()
+                    SqlCommand cmd = new SqlCommand("exec USP_LISTAR_INFCOACHES", cn);
+                    cn.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
                     {
-                        urlAvatar = dr.GetString(0),
-                        idCoach = dr.GetInt32(1),
-                        coach = dr.GetString(2),
-                        idPais = dr.GetInt32(3),
-                        pais = dr.GetString(4),
-                        idIdioma = dr.GetInt32(5),
-                        idioma = dr.GetString(6),
-                        telefono = dr.GetString(7),
-                        correo = dr.GetString(8),
-                        idCertificacion = dr.GetInt32(9),
-                        certificacionICF = dr.GetString(10),
-                        idMetodo = dr.GetInt32(11),
-                        metodoCoaching = dr.GetString(12),
-                        idEspecialidad = dr.GetInt32(13),
-                        especialidad = dr.GetString(14),
-                        idExperiencia = dr.GetInt32(15),
-                        anioExperiencia = dr.GetString(16),
-                        precio = dr.GetInt32(17),
-                    };
-                    temporal.Add(obj);
+                        ECoach obj = new ECoach()
+                        {
+                            urlAvatar = dr.GetString(0),
+                            idCoach = dr.GetInt32(1),
+                            coach = dr.GetString(2),
+                            idPais = dr.GetInt32(3),
+                            pais = dr.GetString(4),
+                            idIdioma = dr.GetInt32(5),
+                            idioma = dr.GetString(6),
+                            telefono = dr.GetString(7),
+                            correo = dr.GetString(8),
+                            idCertificacion = dr.GetInt32(9),
+                            certificacionICF = dr.GetString(10),
+                            idMetodo = dr.GetInt32(11),
+                            metodoCoaching = dr.GetString(12),
+                            idEspecialidad = dr.GetInt32(13),
+                            especialidad = dr.GetString(14),
+                            idExperiencia = dr.GetInt32(15),
+                            anioExperiencia = dr.GetString(16),
+                            precio = dr.GetInt32(17),
+                        };
+                        temporal.Add(obj);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
                 }
             }
             return temporal;
         }
 
-        public IActionResult InfoCoach(int id)
+        public async Task<IActionResult> InfoCoach(int id)
         {
-            var inf = coachinfo().Where(c => c.idCoach == id).FirstOrDefault();
+            var inf = await Task.Run(() => coachinfo().Where(c => c.idCoach == id).FirstOrDefault());
             return PartialView("_PartialCoachInfo", inf);
         }
 
@@ -280,12 +348,12 @@ namespace ProyectoIntegradorII.Controllers
         {
             ECoach reg = Buscar(id);
 
-            SoliCoach e = new SoliCoach();
-            e.idCoach = reg.idCoach;
-            e.precio = reg.precio;
+            SoliCoach sCoach = new SoliCoach();
+            sCoach.idCoach = reg.idCoach;
+            sCoach.precio = reg.precio;
 
             ViewBag.coach = reg.coach;
-            ViewBag.precio = e.precio;
+            ViewBag.precio = sCoach.precio;
 
             return PartialView("_PartialCoachSolicitar");
         }

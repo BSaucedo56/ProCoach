@@ -83,6 +83,10 @@
     </tbody>
 </table>
 
+<div>
+    <h5 style="font-family: lemon; color: white; font-size: 14px; margin-top:5px; margin-bottom: -20px;">Se encontraron @ViewBag.cantidad resultados</h5>
+</div>
+
 <div class="container" style="margin-top:-10px; margin-right:-12px;">
     @if(pager.TotalPages>0)
     {
@@ -91,10 +95,10 @@
             @if (pager.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="1" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">First</a>
+                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="1" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Primera</a>
                 </li>
                 <li>
-                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.CurrentPage - 1)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">&lt;</a>
+                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.CurrentPage - 1)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">❮</a>
                 </li>
             }
 
@@ -108,10 +112,10 @@
             @if(pager.CurrentPage < pager.TotalPages)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.CurrentPage+1)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">&gt;</a>
+                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.CurrentPage+1)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">❯</a>
                 </li>
                 <li>
-                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.TotalPages)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Last</a>
+                    <a class="page-link" asp-controller="Coach" asp-action="EncontrarCoaches" asp-route-pag="@(pager.TotalPages)" asp-route-e="@(e=ViewBag.esp)" asp-route-co="@(co=ViewBag.coc)" asp-route-m="@(m=ViewBag.met)" asp-route-i="@(i=ViewBag.idi)">Última</a>
                 </li>
             }
         </ul>    
