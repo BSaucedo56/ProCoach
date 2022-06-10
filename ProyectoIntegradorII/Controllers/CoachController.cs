@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient; //ACCESO A LOS DATOS DE LA BD COACHBD
 using ProyectoIntegradorII.Datos;
+using ProyectoIntegradorII.Models.ModelosCustom;
 using ProyectoIntegradorII.Models;
 
 namespace ProyectoIntegradorII.Controllers
@@ -270,10 +271,23 @@ namespace ProyectoIntegradorII.Controllers
             return PartialView("_PartialCoachInfo", inf);
         }
 
+        ECoach Buscar(int id)
+        {
+            return coachinfo().Where(c => c.idCoach == id).FirstOrDefault();
+        }
+
         public IActionResult SoliCoach(int id)
         {
-            var inf = coachinfo().Where(c => c.idCoach == id).FirstOrDefault();
-            return PartialView("_PartialCoachSolicitar", inf);
+            ECoach reg = Buscar(id);
+
+            SoliCoach e = new SoliCoach();
+            e.idCoach = reg.idCoach;
+            e.precio = reg.precio;
+
+            ViewBag.coach = reg.coach;
+            ViewBag.precio = e.precio;
+
+            return PartialView("_PartialCoachSolicitar");
         }
     }
 }

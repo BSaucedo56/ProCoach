@@ -1,4 +1,5 @@
-﻿@model ECoach
+﻿@using ProyectoIntegradorII.Models.ModelosCustom
+@model ProyectoIntegradorII.Models.ModelosCustom.SoliCoach
 
 @{
     var listado = new List<SelectListItem>()
@@ -101,6 +102,8 @@
             Value = "3"
         }
     };
+
+    
 }
 
 <!-- Modal Solicitar-->
@@ -116,42 +119,42 @@
 
     <div id="solicitarcoach">
         <h2 class="h2modalcoach">Coach:</h2>
-            <h2 class="h2modalcoachnombre" asp-for="coach">@Model.coach</h2>
+            <h2 class="h2modalcoachnombre" asp-for="coach">@ViewBag.coach</h2>
         <br />
         <br />
         <h2 class="h2modalcoachsesion">Tipo de Sesión:</h2>
             <div class="modalcoachsesiondes">
-            @Html.DropDownList("miDropDownList", listado , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            @Html.DropDownList("sesion", listado , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
         <h2 class="h2modalcoachservicio">Tipo de Servicio:</h2>
             <div class="modalcoachserviciodes">
-            @Html.DropDownList("miDropDownList", listado2 , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            @Html.DropDownList("servicio", listado2 , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
         <h2 class="h2modalprecio">Precio:</h2>
             <div class="modalpreciodes">
-            @Html.TextBox("precio", @Model.precio , new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
+            @Html.TextBox("precio", (decimal)ViewBag.precio , new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
             </div>
         <br />
         <br />
         <h2 class="h2modalcantsesiones">Cantidad de Sesiones:</h2>
             <div class="modalcantsesionesdes">
-            @Html.DropDownList("cantidadsesiones", listado3, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            @Html.DropDownList("cantsesiones", listado3, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
         <h2 class="h2modalcanthoras">Cantidad de Horas:</h2>
             <div class="modalcanthorasdes">
-            @Html.DropDownList("cantidadhoras", listado4, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            @Html.DropDownList("canthoras", listado4, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
         <h2 class="h2modalcoachmonto">Monto:</h2>
             <div class="modalcoachmontodes">
-            @Html.TextBox("monto", 320, new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
+            @Html.TextBox("monto", null , new { disabled = "disabled", type="number", @class ="p-1 ml-1 rounded" })
             </div>
         <br />
         <br />
@@ -165,3 +168,41 @@
     </div>
   </div>
 </div>
+
+<script>
+
+    //REGLA DE NEGOCIO INDIVIDUAL
+    $("#servicio").change(function () {
+        if (document.getElementById('servicio').value == "1") {
+            $("#cantsesiones").val(1);
+            document.getElementById("cantsesiones").disabled = true;
+            $("#canthoras").val(1);
+            document.getElementById("canthoras").disabled = true;
+        }
+        if (document.getElementById('servicio').value == "2") {
+            document.getElementById("cantsesiones").disabled = false;
+            document.getElementById("canthoras").disabled = false;
+        }
+    });           
+   
+</script>
+<script>
+
+    $(document).change(function(event){
+      //Capturo el valor de cantSesiones,cantHoras y precio
+      cantSesiones = $('#cantsesiones').val();
+      cantHoras = $('#canthoras').val();
+      precio = document.getElementById("precio").value;
+      //Compruebo si alguno de los tres está vacío
+      if(cantSesiones == "" || cantHoras == "" || precio == ""){
+        //A la variable resultado le asigno el valor 0
+        var resultado = 0;
+      }else{
+        //Si los tres ya tienen valor, hago operacion de los tres valores
+        var resultado = (parseInt(precio) * parseInt(cantSesiones)) * parseInt(cantHoras);
+      }
+      //Muestro el resultado
+        document.getElementById("monto").value = resultado;
+    });  
+
+</script>

@@ -1,4 +1,4 @@
-﻿@model ECoach
+﻿@model ProyectoIntegradorII.Models.ModelosCustom.ECoach
 
 <!-- Modal Info-->
 <div class="modal fade" id="modalInfoCoach" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -16,7 +16,7 @@
             @Model.pais
         </h5>
         <h6 class="modalidioma" asp-for="idioma">
-            @Model.idioma
+            (@Model.idioma)
         </h6>
         <h3 class="modaltelefono">Telefono:</h3>
         <h3 class="modalnumtelefono" asp-for="telefono">

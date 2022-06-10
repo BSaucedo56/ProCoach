@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProyectoIntegradorII.Models
+namespace ProyectoIntegradorII.Models.ModelosCustom
 {
     public class ECoach
     {
