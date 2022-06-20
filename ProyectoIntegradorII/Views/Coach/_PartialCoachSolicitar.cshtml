@@ -107,7 +107,7 @@
 }
 
 <!-- Modal Solicitar-->
-
+<div id="mydiv">
 <div class="modal fade" id="modalSolicitarCoach" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -115,7 +115,9 @@
         <h5 class="modaltitulosoli" id="exampleModalLabel">SOLICITAR COACH</h5>
       </div>
       <div class="modal-body">
-
+@using(Html.BeginForm("SoliCoach","Coach", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 
     <div id="solicitarcoach">
         <h2 class="h2modalcoach">Coach:</h2>
@@ -124,88 +126,107 @@
         <br />
         <h2 class="h2modalcoachsesion">Tipo de Sesión:</h2>
             <div class="modalcoachsesiondes">
-            @Html.DropDownList("sesion", listado , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            @Html.DropDownList("ses", listado , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
         <h2 class="h2modalcoachservicio">Tipo de Servicio:</h2>
             <div class="modalcoachserviciodes">
-            @Html.DropDownList("servicio", listado2 , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            @Html.DropDownList("ser", listado2 , new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
         <h2 class="h2modalprecio">Precio:</h2>
             <div class="modalpreciodes">
-            @Html.TextBox("precio", (decimal)ViewBag.precio , new { disabled = "disabled", @class ="p-1 ml-1 rounded" })
+            @Html.TextBox("pre", (decimal)ViewBag.precio , new { @readonly="readonly", @class ="p-1 ml-1 rounded" })
             </div>
         <br />
         <br />
         <h2 class="h2modalcantsesiones">Cantidad de Sesiones:</h2>
             <div class="modalcantsesionesdes">
-            @Html.DropDownList("cantsesiones", listado3, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            @Html.DropDownList("cantses", listado3, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
         <h2 class="h2modalcanthoras">Cantidad de Horas:</h2>
             <div class="modalcanthorasdes">
-            @Html.DropDownList("canthoras", listado4, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
+            @Html.DropDownList("canthor", listado4, new { @class = "p-1 ml-1 text-center rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
         <h2 class="h2modalcoachmonto">Monto:</h2>
             <div class="modalcoachmontodes">
-            @Html.TextBox("monto", null , new { disabled = "disabled", type="number", @class ="p-1 ml-1 rounded" })
+            @Html.TextBox("mon", null , new { @readonly="readonly", type="number", @class ="p-1 ml-1 rounded" })
             </div>
         <br />
         <br />
-
         <div class="modal-footer">
-        <button type="button" class="modalsoliaceptar" data-bs-toggle="modal" data-bs-target="#modalInsertarCliente">Siguiente</button>
-        <button type="button" class="modalsolicancelar" data-bs-dismiss="modal" onClick = "cerrarModal()">Cancelar</button>
-      </div>
+            <input type="submit" name="name" value="Siguiente" class="modalsoliaceptar" id="boton01"/>
+         @* <button type="submit" class="modalsoliaceptar" data-bs-toggle="modal" data-bs-target="#modalInsertarCliente" onclick="toggle(this)">Siguiente</button>*@
+            <button type="button" class="modalsolicancelar" data-bs-dismiss="modal" onClick = "cerrarModal()">Cancelar</button>
+        </div>
     </div>
+}
       </div>
     </div>
   </div>
 </div>
+</div>
+
+<script>
+    $(document).ready(function()
+	{
+	$("#boton01").click(function () {
+        document.getElementById("ser").disabled = false;
+        document.getElementById("cantses").disabled = false;
+        document.getElementById("canthor").disabled = false;
+	    console.log(parseInt($("#ses").val()));
+        console.log(parseInt($("#ser").val()));
+        console.log(parseInt($("#pre").val()));
+        console.log(parseInt($("#cantses").val()));
+        console.log(parseInt($("#canthor").val()));
+        console.log(parseInt($("#mon").val()));
+	});
+});
+</script>
 
 <script>
 
     //REGLA DE NEGOCIO INDIVIDUAL
-    $("#servicio").change(function () {
-        if (document.getElementById('servicio').value == "1") {
-            $("#cantsesiones").val(1);
-            document.getElementById("cantsesiones").disabled = true;
-            $("#canthoras").val(1);
-            document.getElementById("canthoras").disabled = true;
+    $("#ser").change(function () {
+        if (document.getElementById('ser').value == "1") {
+            $("#cantses").val(1);
+            document.getElementById("cantses").disabled = true;
+            $("#canthor").val(1);
+            document.getElementById("canthor").disabled = true;
         }
-        if (document.getElementById('servicio').value == "2") {
-            document.getElementById("cantsesiones").disabled = false;
-            document.getElementById("canthoras").disabled = false;
+        if (document.getElementById('ser').value == "2") {
+            document.getElementById("cantses").disabled = false;
+            document.getElementById("canthor").disabled = false;
         }
     });           
    
 </script>
 <script>
-    $("#sesion").change(function () {
-        if (document.getElementById('sesion').value == "1") {
-            $("#servicio").val(1);
-            document.getElementById("servicio").disabled = true;
-            $("#cantsesiones").val(1);
-            document.getElementById("cantsesiones").disabled = true;
-            $("#canthoras").val(1);
-            document.getElementById("canthoras").disabled = true;
+    $("#ses").change(function () {
+        if (document.getElementById('ses').value == "1") {
+            $("#ser").val(1);
+            document.getElementById("ser").disabled = true;
+            $("#cantses").val(1);
+            document.getElementById("cantses").disabled = true;
+            $("#canthor").val(1);
+            document.getElementById("canthor").disabled = true;
         }
-        if (document.getElementById('sesion').value == "2" && document.getElementById('servicio').value == "1") {
-            document.getElementById("servicio").disabled = false;
-            $("#cantsesiones").val(1);
-            document.getElementById("cantsesiones").disabled = true;
-            $("#canthoras").val(1);
-            document.getElementById("canthoras").disabled = true;
+        if (document.getElementById('ses').value == "2" && document.getElementById('ser').value == "1") {
+            document.getElementById("ser").disabled = false;
+            $("#cantses").val(1);
+            document.getElementById("cantses").disabled = true;
+            $("#canthor").val(1);
+            document.getElementById("canthor").disabled = true;
         }
-        if (document.getElementById('sesion').value == "2" && document.getElementById('servicio').value == "2") {
-            document.getElementById("cantsesiones").disabled = false;
-            document.getElementById("canthoras").disabled = false;
+        if (document.getElementById('ses').value == "2" && document.getElementById('ser').value == "2") {
+            document.getElementById("cantses").disabled = false;
+            document.getElementById("canthor").disabled = false;
         }
     });      
 </script>
@@ -213,9 +234,9 @@
 
     $(document).change(function(event){
       //Capturo el valor de cantSesiones,cantHoras y precio
-      cantSesiones = $('#cantsesiones').val();
-      cantHoras = $('#canthoras').val();
-      precio = document.getElementById("precio").value;
+      cantSesiones = $('#cantses').val();
+      cantHoras = $('#canthor').val();
+      precio = document.getElementById("pre").value;
       //Compruebo si alguno de los tres está vacío
       if(cantSesiones == "" || cantHoras == "" || precio == ""){
         //A la variable resultado le asigno el valor 0
@@ -225,7 +246,7 @@
         var resultado = parseInt(precio) * parseInt(cantSesiones) * parseInt(cantHoras);
       }
       //Muestro el resultado
-        document.getElementById("monto").value = resultado;
+        document.getElementById("mon").value = resultado;
     });  
 
 </script>

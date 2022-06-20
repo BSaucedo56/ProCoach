@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient; //ACCESO A LOS DATOS DE LA BD COACHBD
 using ProyectoIntegradorII.Datos;
 using ProyectoIntegradorII.Models.ModelosCustom;
 using ProyectoIntegradorII.Models;
+using System.Data;
 
 namespace ProyectoIntegradorII.Controllers
 {
@@ -356,6 +357,198 @@ namespace ProyectoIntegradorII.Controllers
             ViewBag.precio = sCoach.precio;
 
             return PartialView("_PartialCoachSolicitar");
+        }
+
+        IEnumerable<Pais> paises()
+        {
+            List<Pais> temporal = new List<Pais>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+            {
+                SqlCommand cmd = new SqlCommand("exec USP_LISTAR_PAISES", cn); // Select a la tabla paises
+                cn.Open(); //Abrir la conexión
+                SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
+                while (dr.Read()) //Lee cada uno de los registros
+                {
+                    Pais obj = new Pais()
+                    {
+                        idPais = dr.GetInt32(0),
+                        pais = dr.GetString(1),
+                    };
+                    temporal.Add(obj); //crea cada elemento en temporal
+                }
+            }
+            return temporal;
+        }
+
+        IEnumerable<TipoDocumento> tiposdocumentos()
+        {
+            List<TipoDocumento> temporal = new List<TipoDocumento>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+            {
+                SqlCommand cmd = new SqlCommand("exec USP_LISTAR_TIPO_DOCUMENTO", cn); // Select a la tabla tipodocumento
+                cn.Open(); //Abrir la conexión
+                SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
+                while (dr.Read()) //Lee cada uno de los registros
+                {
+                    TipoDocumento obj = new TipoDocumento()
+                    {
+                        idDocumento = dr.GetInt32(0),
+                        documento = dr.GetString(1),
+                    };
+                    temporal.Add(obj); //crea cada elemento en temporal
+                }
+            }
+            return temporal;
+        }
+
+        [HttpPost]
+        public ActionResult SoliCoach(int id, int ses, int ser, decimal pre, int cantses, int canthor, decimal mon)
+        {
+            if (ses == 1)
+            {
+                ViewBag.sesion = "Referencia Estrategica";
+            }
+            if (ses == 2)
+            {
+                ViewBag.sesion = "Coaching";
+            }
+            if (ser == 1)
+            {
+                ViewBag.servicio = "Individual";
+            }
+            if (ser == 2)
+            {
+                ViewBag.servicio = "Paquete";
+            }
+
+            ECoach regx = Buscar(id);
+
+            ViewBag.coach = regx.coach;
+            ViewBag.paises = new SelectList(paises(), "idPais", "pais");
+            ViewBag.tipodocumentos = new SelectList(tiposdocumentos(), "idDocumento", "documento");
+
+            SoliCoach reg = new SoliCoach();
+            reg.idCoach = regx.idCoach;
+            reg.tipoSesion = ses;
+            reg.tipoServicio = ser;
+            reg.precio = pre;
+            reg.cantidadSesiones = cantses;
+            reg.cantidadHoras = canthor;
+            reg.monto = mon;
+
+            ViewBag.id = reg.idCoach;
+            ViewBag.ses = ses;
+            ViewBag.ser = ser;
+            ViewBag.precio = pre;
+            ViewBag.cantsesiones = cantses;
+            ViewBag.cantHoras = canthor;
+            ViewBag.monto = mon;
+            ViewBag.totalseshor = cantses * canthor;
+
+            return View(reg);
+        }
+
+        [HttpPost]
+        public IActionResult NuevoCliente(SoliCoach reg)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    ViewBag.mensaje = Agregar(reg);
+
+                    TempData["SuccessMessage"] = "Le hemos enviado su usuario y contraseña XD";
+
+                    //var email = new MimeMessage();
+                    //email.From.Add(MailboxAddress.Parse("proyectointegradorcoach@gmail.com"));
+                    //email.To.Add(MailboxAddress.Parse(reg.correo));
+                    //email.Subject = "Usuario y Contraseña";
+                    //email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                    //{
+                    //    Text = "Tu Usuario es: Carlos20191 y tu Contraseña es: h173h121"
+                    //};
+                    //using (var emailClient = new SmtpClient())
+                    //{
+                    //    emailClient.Connect("smtp.gmail.com", 587, MailKit
+                    //        .Security.SecureSocketOptions.StartTls);
+                    //    emailClient.Authenticate("proyectointegradorcoach@gmail.com", "encontrarcoach");
+                    //    emailClient.Send(email);
+                    //    emailClient.Disconnect(true);
+                    //}
+                }
+
+                //var email = new MimeMessage();
+                //email.From.Add(MailboxAddress.Parse("proyectointegradorcoach@gmail.com"));
+                //email.To.Add(MailboxAddress.Parse("bsaucedo250300@gmail.com"));
+                //email.Subject = "USUARIO Y CONTRASEÑA";
+                //email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "Tu usuario es: , y tu contraseña es: " };
+
+                //using var smtp = new SmtpClient();
+                //smtp.Connect("smtp.gmail.com", 25, MailKit.Security.SecureSocketOptions.StartTls);
+                //smtp.Authenticate("proyectointegradorcoach@gmail.com", "encontrarcoach");
+                //smtp.Send(email);
+                //smtp.Disconnect(true);
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                TempData["SuccessMessage"] = "No se ha podido guardar sus datos";
+            }
+
+            return RedirectToAction("EncontrarCoach");
+        }
+
+        public string Agregar(SoliCoach reg)
+        {
+            string mensaje = "";
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                cn.Open();
+                SqlTransaction tr = cn.BeginTransaction(IsolationLevel.Serializable);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("USP_SOLICITAR_COACH_CLIENTE", cn, tr);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_COACH", reg.idCoach);
+                    cmd.Parameters.AddWithValue("@TIPOSESION", reg.tipoSesion);
+                    cmd.Parameters.AddWithValue("@TIPOSERVICIO", reg.tipoServicio);
+                    cmd.Parameters.AddWithValue("@PRECIO", reg.precio);
+                    cmd.Parameters.AddWithValue("@CANTIDADSESIONES", reg.cantidadSesiones);
+                    cmd.Parameters.AddWithValue("@CANTIDADHORAS", reg.cantidadHoras);
+                    cmd.Parameters.AddWithValue("@MONTO", reg.monto);
+                    cmd.Parameters.AddWithValue("@NOMBRES", reg.nombres);
+                    cmd.Parameters.AddWithValue("@APELLIDOS", reg.apellidos);
+                    cmd.Parameters.AddWithValue("@DIRECCION", reg.direccion);
+                    cmd.Parameters.AddWithValue("@TELEFONO", reg.telefono);
+                    cmd.Parameters.AddWithValue("@CORREO", reg.correo);
+                    cmd.Parameters.AddWithValue("@TIPODOCUMENTO", reg.tipoDocumento);
+                    cmd.Parameters.AddWithValue("@NUMDOCUMENTO", reg.numDocumento);
+                    cmd.Parameters.AddWithValue("@PAIS", reg.pais);
+                    cmd.ExecuteNonQuery();
+
+                    tr.Commit();
+
+                    mensaje = "Datos registrados con exito";
+                }
+
+                catch (Exception ex) { mensaje = ex.Message; tr.Rollback(); }
+
+                finally { cn.Close(); }
+
+            }
+
+            return mensaje;
+
         }
     }
 }

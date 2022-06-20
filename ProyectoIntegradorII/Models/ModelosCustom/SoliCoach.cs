@@ -1,4 +1,6 @@
-﻿namespace ProyectoIntegradorII.Models.ModelosCustom
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProyectoIntegradorII.Models.ModelosCustom
 {
     public class SoliCoach
     {
@@ -8,14 +10,14 @@
         public decimal precio { get; set; }
         public int cantidadSesiones { get; set; }
         public int cantidadHoras { get; set; }
-        public decimal monto { get { return precio * cantidadHoras; } }
-        public string nombres { get; set; }
-        public string apellidos { get; set; }
-        public string direccion { get; set; }
-        public string telefono { get; set; }
-        public string correo { get; set; }
-        public int tipoDocumento { get; set; }
-        public string numDocumento { get; set; }
-        public int pais { get; set; }
+        public decimal monto { get; set; }
+        [Required(ErrorMessage = "El campo Nombres no debe estar vacio")][StringLength(50)] public string nombres { get; set; }
+        [Required(ErrorMessage = "El campo Apellidos no debe estar vacio")][StringLength(50)] public string apellidos { get; set; }
+        [Required(ErrorMessage = "El campo Dirección no debe estar vacio")][StringLength(50)] public string direccion { get; set; }
+        [Required(ErrorMessage = "El campo Teléfono no debe estar vacio")][StringLength(9, ErrorMessage = "{0} la longitud debe estar entre {2} y {1}.", MinimumLength = 9)] public string telefono { get; set; }
+        [Required(ErrorMessage = "El campo Correo no debe estar vacio")][StringLength(50)] public string correo { get; set; }
+        [Required][MaxLength(8, ErrorMessage = "The property {0} doesn't have more than {1} elements")] public int tipoDocumento { get; set; }
+        [Required(ErrorMessage = "El campo N° de Documento no debe estar vacio")][StringLength(15, ErrorMessage = "{0} la longitud debe estar entre {2} y {1}.", MinimumLength = 8)] public string numDocumento { get; set; }
+        [Required][MaxLength(8, ErrorMessage = "The property {0} doesn't have more than {1} elements")] public int pais { get; set; }
     }
 }
