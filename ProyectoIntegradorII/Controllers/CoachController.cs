@@ -356,6 +356,7 @@ namespace ProyectoIntegradorII.Controllers
             sCoach.precio = reg.precio;
 
             ViewBag.coach = reg.coach;
+            ViewBag.correo = reg.correo;
             ViewBag.precio = sCoach.precio;
 
             return PartialView("_PartialCoachSolicitar");
@@ -430,6 +431,8 @@ namespace ProyectoIntegradorII.Controllers
             }
 
             ECoach regx = Buscar(id);
+
+            ViewBag.correoCoach = regx.correo;
 
             ViewBag.coach = regx.coach;
             ViewBag.paises = new SelectList(paises(), "idPais", "pais");
