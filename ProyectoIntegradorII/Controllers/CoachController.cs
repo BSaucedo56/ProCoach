@@ -6,7 +6,9 @@ using ProyectoIntegradorII.Datos;
 using ProyectoIntegradorII.Models.ModelosCustom;
 using ProyectoIntegradorII.Models;
 using System.Data;
-
+using Microsoft.AspNetCore.Http;
+using MimeKit;
+using MailKit.Net.Smtp;
 namespace ProyectoIntegradorII.Controllers
 {
     public class CoachController : Controller
@@ -463,39 +465,85 @@ namespace ProyectoIntegradorII.Controllers
                 {
                     ViewBag.mensaje = Agregar(reg);
 
-                    TempData["SuccessMessage"] = "Le hemos enviado su usuario y contraseña XD";
+                    TempData["SuccessMessage"] = "Le hemos enviado su usuario y contraseña a su correo";
 
-                    //var email = new MimeMessage();
-                    //email.From.Add(MailboxAddress.Parse("proyectointegradorcoach@gmail.com"));
-                    //email.To.Add(MailboxAddress.Parse(reg.correo));
-                    //email.Subject = "Usuario y Contraseña";
-                    //email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                    //{
-                    //    Text = "Tu Usuario es: Carlos20191 y tu Contraseña es: h173h121"
-                    //};
-                    //using (var emailClient = new SmtpClient())
-                    //{
-                    //    emailClient.Connect("smtp.gmail.com", 587, MailKit
-                    //        .Security.SecureSocketOptions.StartTls);
-                    //    emailClient.Authenticate("proyectointegradorcoach@gmail.com", "encontrarcoach");
-                    //    emailClient.Send(email);
-                    //    emailClient.Disconnect(true);
-                    //}
+                    #region envio correo cliente
+                    var email = new MimeMessage();
+                    email.From.Add(MailboxAddress.Parse("alerta.coach@inteligencia369.com"));
+                    email.To.Add(MailboxAddress.Parse(reg.correo));
+                    email.Subject = "Usuario y Contraseña";
+                    email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                    {
+                        Text = "Tu Usuario es: Carlos20191 y tu Contraseña es: h173h121"
+                    };
+                    using (var emailClient = new SmtpClient())
+                    {
+                        emailClient.Connect("mail.inteligencia369.com", 587, MailKit
+                            .Security.SecureSocketOptions.Auto);
+                        emailClient.Authenticate("alerta.coach@inteligencia369.com", "Al3rt4c0ach2022");
+                        emailClient.Send(email);
+                        emailClient.Disconnect(true);
+                    }
+                    #endregion
+
+                    var cadena = new Conexion();
+
+                    string Clinotificado = "Notificado";
+
+                    using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+                    {
+                        cn.Open();
+                        SqlCommand cmd = new SqlCommand("USP_ACTUALIZAR_SERVICIO_CLIENTE", cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CLIENTENOTIFICADO", Clinotificado);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    #region envio correo coach
+                    string correoCoach = "";
+
+                    using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+                    {
+                        SqlCommand cmd = new SqlCommand("SELECT B.CORREO FROM COACH A INNER JOIN PERSONA B ON A.ID_PERSONA = B.ID_PERSONA WHERE A.ID_COACH = @idCoach", cn); // Select a la tabla tipodocumento
+                        cn.Open(); //Abrir la conexión
+                        cmd.Parameters.AddWithValue("@idcoach", reg.idCoach);
+                        SqlDataReader dr = cmd.ExecuteReader(); // LEER DATOS
+                        while (dr.Read()) //Lee cada uno de los registros
+                        {
+                            correoCoach = dr.GetString(0);
+
+                        }
+                    }
+
+                    var email2 = new MimeMessage();
+                    email2.From.Add(MailboxAddress.Parse("alerta.coach@inteligencia369.com"));
+                    email2.To.Add(MailboxAddress.Parse(correoCoach));
+                    email2.Subject = "Solicitud de Servicio";
+                    email2.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                    {
+                        Text = "El usuario X ha contratado sus servicios"
+                    };
+                    using (var emailClient2 = new SmtpClient())
+                    {
+                        emailClient2.Connect("mail.inteligencia369.com", 587, MailKit
+                            .Security.SecureSocketOptions.Auto);
+                        emailClient2.Authenticate("alerta.coach@inteligencia369.com", "Al3rt4c0ach2022");
+                        emailClient2.Send(email2);
+                        emailClient2.Disconnect(true);
+                    }
+                    #endregion
+
+                    string Coachnotificado = "Notificado";
+
+                    using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+                    {
+                        cn.Open();
+                        SqlCommand cmd = new SqlCommand("USP_ACTUALIZAR_SERVICIO_COACH", cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@COACHNOTIFICADO", Coachnotificado);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-
-                //var email = new MimeMessage();
-                //email.From.Add(MailboxAddress.Parse("proyectointegradorcoach@gmail.com"));
-                //email.To.Add(MailboxAddress.Parse("bsaucedo250300@gmail.com"));
-                //email.Subject = "USUARIO Y CONTRASEÑA";
-                //email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "Tu usuario es: , y tu contraseña es: " };
-
-                //using var smtp = new SmtpClient();
-                //smtp.Connect("smtp.gmail.com", 25, MailKit.Security.SecureSocketOptions.StartTls);
-                //smtp.Authenticate("proyectointegradorcoach@gmail.com", "encontrarcoach");
-                //smtp.Send(email);
-                //smtp.Disconnect(true);
-
-
             }
             catch (Exception ex)
             {
