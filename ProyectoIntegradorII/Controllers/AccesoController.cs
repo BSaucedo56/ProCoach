@@ -5,6 +5,7 @@ using System.Data;
 using ProyectoIntegradorII.Models;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorII.Datos;
+using ProyectoIntegradorII.Models.ModelosCustom;
 
 namespace ProyectoIntegradorII.Controllers
 {
@@ -85,10 +86,56 @@ namespace ProyectoIntegradorII.Controllers
 
         }
 
+        IEnumerable<InfUsuario> usuarioinfo(string nombre_usuario)
+        {
+            List<InfUsuario> temporal = new List<InfUsuario>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("exec USP_OBTENER_INFO_USUARIO @NOMBRE_USUARIO", cn);
+                    cmd.Parameters.AddWithValue("@NOMBRE_USUARIO", nombre_usuario);
+                    cn.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        InfUsuario obj = new InfUsuario()
+                        {
+                            nombre_usuario = dr.GetString(0),
+                            foto = dr.GetString(1),
+                            nombresApellidos = dr.GetString(2),
+                            tipousuario = dr.GetString(3),
+                        };
+                        temporal.Add(obj);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+            return temporal;
+        }
+
         public IActionResult Logueado()
         {
             // El contenido del Session (sesion) se almacena en un ViewBag
             ViewBag.usuario = HttpContext.Session.GetString(sesion);
+
+            InfUsuario infU = new InfUsuario();
+            infU.nombre_usuario = HttpContext.Session.GetString(sesion);
+            var inf = usuarioinfo(infU.nombre_usuario).Where(c => c.nombre_usuario == infU.nombre_usuario).FirstOrDefault();
+
+            ViewBag.nombre = inf.nombresApellidos;
+            ViewBag.foto = inf.foto;
+            ViewBag.tipo = inf.tipousuario;
 
             return View();
 

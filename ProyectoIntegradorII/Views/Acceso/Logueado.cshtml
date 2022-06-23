@@ -35,14 +35,14 @@
       </div>
       <div class="sidebar-header">
         <div class="user-pic">
-          <img class="img-responsive img-rounded" src="https://picsum.photos/id/237/200/300"
-            alt="User picture">
+          <img class="img-responsive img-rounded" src="@ViewBag.foto"
+            alt="User picture" onerror="if (this.src != 'https://i.imgur.com/6aPSKTE.png') this.src = 'https://i.imgur.com/6aPSKTE.png';">
         </div>
         <div class="user-info">
-          <span class="user-name">Javier
-            <strong>Fernandez Aguado</strong>
+          <span class="user-name">
+            <strong>@ViewBag.nombre</strong>
           </span>
-          <span class="user-role">Coach</span>
+          <span class="user-role">@ViewBag.tipo</span>
           <span class="user-status">
             <i class="fa fa-circle"></i>
             <span>Online</span>
@@ -203,7 +203,7 @@
   </nav>
 
   <main class="page-content">
-      <h1 style="color: white; margin: 30px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Bienvenido @ViewBag.usuario</h1>
+      <h1 style="color: black; margin: 30px; font-family: lemon; text-align: center;">Bienvenido @ViewBag.usuario</h1>
   </main>
   <!-- sidebar-wrapper  -->
   @*<main class="page-content">

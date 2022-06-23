@@ -568,7 +568,7 @@ namespace ProyectoIntegradorII.Controllers
                 SqlTransaction tr = cn.BeginTransaction(IsolationLevel.Serializable);
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("USP_SOLICITAR_COACH_CLIENTE", cn, tr);
+                    SqlCommand cmd = new SqlCommand("USP_REGISTRO_INICIAL", cn, tr);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID_COACH", reg.idCoach);
                     cmd.Parameters.AddWithValue("@TIPOSESION", reg.tipoSesion);
