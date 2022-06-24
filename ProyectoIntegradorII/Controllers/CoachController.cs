@@ -466,9 +466,14 @@ namespace ProyectoIntegradorII.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    ViewBag.mensaje = Agregar(reg);
+                    ResponseClienteNuevo responseClienteNuevo = new ResponseClienteNuevo();
+                    responseClienteNuevo = Agregar(reg);
+
+                    ViewBag.mensaje = responseClienteNuevo.mensaje;
 
                     TempData["SuccessMessage"] = "Le hemos enviado su usuario y contraseña a su correo";
+
+                    var cadena = new Conexion();
 
                     #region envio correo cliente
                     var email = new MimeMessage();
@@ -477,7 +482,7 @@ namespace ProyectoIntegradorII.Controllers
                     email.Subject = "Usuario y Contraseña";
                     email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                     {
-                        Text = "Tu Usuario es: Carlos20191 y tu Contraseña es: h173h121"
+                        Text = "Tu Usuario es: " + responseClienteNuevo.nombreUsuario + " y tu Contraseña es: " + responseClienteNuevo.clave
                     };
                     using (var emailClient = new SmtpClient())
                     {
@@ -488,8 +493,6 @@ namespace ProyectoIntegradorII.Controllers
                         emailClient.Disconnect(true);
                     }
                     #endregion
-
-                    var cadena = new Conexion();
 
                     string Clinotificado = "Notificado";
 
@@ -524,7 +527,7 @@ namespace ProyectoIntegradorII.Controllers
                     email2.Subject = "Solicitud de Servicio";
                     email2.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                     {
-                        Text = "El usuario X ha contratado sus servicios"
+                        Text = "El cliente " + responseClienteNuevo.nombresCompletos + " ha contratado sus servicios"
                     };
                     using (var emailClient2 = new SmtpClient())
                     {
@@ -557,9 +560,11 @@ namespace ProyectoIntegradorII.Controllers
             return RedirectToAction("EncontrarCoach");
         }
 
-        public string Agregar(SoliCoach reg)
+        public ResponseClienteNuevo Agregar(SoliCoach reg)
         {
-            string mensaje = "";
+
+            ResponseClienteNuevo temporal = new ResponseClienteNuevo();
+
             var cadena = new Conexion();
 
             using (var cn = new SqlConnection(cadena.getCadenaSQL()))
@@ -568,7 +573,7 @@ namespace ProyectoIntegradorII.Controllers
                 SqlTransaction tr = cn.BeginTransaction(IsolationLevel.Serializable);
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("USP_REGISTRO_INICIAL", cn, tr);
+                    SqlCommand cmd = new SqlCommand("USP_REGISTRO_INICIAL_2", cn, tr);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID_COACH", reg.idCoach);
                     cmd.Parameters.AddWithValue("@TIPOSESION", reg.tipoSesion);
@@ -585,20 +590,33 @@ namespace ProyectoIntegradorII.Controllers
                     cmd.Parameters.AddWithValue("@TIPODOCUMENTO", reg.tipoDocumento);
                     cmd.Parameters.AddWithValue("@NUMDOCUMENTO", reg.numDocumento);
                     cmd.Parameters.AddWithValue("@PAIS", reg.pais);
+                    cmd.Parameters.Add("@NOMBRES_OUT", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@APELLIDOS_OUT", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@ID_NOMBRE_USUARIO_CUSTOM_OUT", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@CLAVE_OUT", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@MENSAJE_OUT", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
                     cmd.ExecuteNonQuery();
 
                     tr.Commit();
 
-                    mensaje = "Datos registrados con exito";
+                    temporal.nombresCompletos = cmd.Parameters["@NOMBRES_OUT"].Value.ToString() + " " + cmd.Parameters["@APELLIDOS_OUT"].Value.ToString();
+                    temporal.nombreUsuario = cmd.Parameters["@ID_NOMBRE_USUARIO_CUSTOM_OUT"].Value.ToString();
+                    temporal.clave = cmd.Parameters["@CLAVE_OUT"].Value.ToString();
+                    temporal.mensaje = cmd.Parameters["@MENSAJE_OUT"].Value.ToString();
+
                 }
 
-                catch (Exception ex) { mensaje = ex.Message; tr.Rollback(); }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    tr.Rollback();
+                }
 
                 finally { cn.Close(); }
 
             }
 
-            return mensaje;
+            return temporal;
 
         }
     }
