@@ -141,6 +141,65 @@ namespace ProyectoIntegradorII.Controllers
 
         }
 
+        IEnumerable<ServicioInf> solicitudes(string nombre_usuario)
+        {
+            List<ServicioInf> temporal = new List<ServicioInf>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("exec USP_SOLICITUDES_COACH_2 @NOMBRE_USUARIO", cn);
+                    cmd.Parameters.AddWithValue("@NOMBRE_USUARIO", nombre_usuario);
+                    cn.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ServicioInf obj = new ServicioInf()
+                        {
+                            nombre_usuario = dr.GetString(0),
+                            nombresApellidos = dr.GetString(1),
+                            fechasesion = dr.GetDateTime(2),
+                            tiposesion = dr.GetString(3),
+                            tiposervicio = dr.GetString(4),
+                            totalHoras = dr.GetInt32(5),
+                            monto = dr.GetDecimal(6),
+                        };
+                        temporal.Add(obj);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+            return temporal;
+        }
+
+        public IActionResult Sesiones()
+        {
+            ViewBag.usuario = HttpContext.Session.GetString(sesion);
+
+            InfUsuario infU = new InfUsuario();
+            infU.nombre_usuario = HttpContext.Session.GetString(sesion);
+            var inf = usuarioinfo(infU.nombre_usuario).Where(c => c.nombre_usuario == infU.nombre_usuario).FirstOrDefault();
+
+            ViewBag.nombre = inf.nombresApellidos;
+            ViewBag.foto = inf.foto;
+            ViewBag.tipo = inf.tipousuario;
+
+            var usuariosesion = HttpContext.Session.GetString(sesion);
+            IEnumerable<ServicioInf> temporal = solicitudes(usuariosesion);
+
+            return View(temporal);
+        }
+
         //FALTA
         public async Task<IActionResult> CerrarSesion()
         {

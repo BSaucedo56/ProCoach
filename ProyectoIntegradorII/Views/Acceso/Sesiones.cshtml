@@ -1,6 +1,22 @@
-﻿@{
+﻿@model IEnumerable<ProyectoIntegradorII.Models.ModelosCustom.ServicioInf>
+
+@{
+    ViewData["Title"] = "Solicitudes";
+    Layout = "~/Views/Shared/_LayoutLogueado.cshtml";
+}
+
+@{
     ViewData["Title"] = "Logueado";
     Layout = "~/Views/Shared/_LayoutLogueado.cshtml";
+
+    @if(ViewBag.tipo == "Coach")
+    {
+        ViewBag.tipoU = "Cliente";
+    }
+    @if(ViewBag.tipo == "Cliente")
+    {
+        ViewBag.tipoU = "Coach";
+    }
 }
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -61,6 +77,7 @@
             <a asp-area="" asp-controller="Acceso" asp-action="Sesiones">
                 <i class="fa fa-envelope"></i>
                 <span>Sesiones</span>
+                
             </a>
           </li>
           <li>
@@ -202,8 +219,79 @@
     </div>*@
   </nav>
 
-  <main class="page-content">
-      <h1 style="color: black; margin: 30px; font-family: lemon; text-align: center;">Bienvenido @ViewBag.usuario</h1>
+  <main>
+      <h1 style="color: black; margin: 30px; font-family: lemon; text-align: center;">Sesiones</h1>
+      <div style="color: black; margin: 30px; font-family: lemon; text-align: center;">
+
+        <!--agregar la vista parcial-->
+
+    <table class="table center" >
+    <thead>
+        <tr>
+@*            <th>
+                @Html.DisplayNameFor(model => model.nombre_usuario)
+            </th>*@
+            <th>
+                @ViewBag.tipoU
+            </th>
+            <th>
+                Fecha de Sesión
+            </th>
+            <th>
+                Tipo de Sesión
+            </th>
+            <th>
+                Tipo de Servicio
+            </th>
+            <th>
+                Total de Horas por Sessiones
+            </th>
+            <th>
+                Monto
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+   @*         <td>
+                @Html.DisplayFor(modelItem => item.nombre_usuario)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.nombresApellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechasesion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tiposesion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tiposervicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.totalHoras)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.monto)
+            </td>
+            <td>
+                @*@Html.ActionLink("Aceptar", "Edit", new { @class = "btn btn-info" })*@
+                <button type="button" class="btn btn-success">Aceptar</button>
+            </td>
+            <td>
+                @*@Html.ActionLink("Rechazar", "Delete", new { @class = "btn btn-info" })*@
+                <button type="button" class="btn btn-danger">Rechazar</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+      </div>
   </main>
   <!-- sidebar-wrapper  -->
   @*<main class="page-content">
