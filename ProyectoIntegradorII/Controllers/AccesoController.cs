@@ -141,7 +141,7 @@ namespace ProyectoIntegradorII.Controllers
 
         }
 
-        IEnumerable<ServicioInf> solicitudes(string nombre_usuario)
+        IEnumerable<ServicioInf> servicios(string nombre_usuario)
         {
             List<ServicioInf> temporal = new List<ServicioInf>();
 
@@ -151,7 +151,7 @@ namespace ProyectoIntegradorII.Controllers
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("exec USP_SOLICITUDES_COACH_2 @NOMBRE_USUARIO", cn);
+                    SqlCommand cmd = new SqlCommand("exec USP_MOSTRAR_SERVICIOS @NOMBRE_USUARIO", cn);
                     cmd.Parameters.AddWithValue("@NOMBRE_USUARIO", nombre_usuario);
                     cn.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
@@ -161,11 +161,11 @@ namespace ProyectoIntegradorII.Controllers
                         {
                             nombre_usuario = dr.GetString(0),
                             nombresApellidos = dr.GetString(1),
-                            fechasesion = dr.GetDateTime(2),
-                            tiposesion = dr.GetString(3),
-                            tiposervicio = dr.GetString(4),
-                            totalHoras = dr.GetInt32(5),
-                            monto = dr.GetDecimal(6),
+                            tiposervicio = dr.GetString(2),
+                            precio = dr.GetDecimal(3),
+                            cantsesiones = dr.GetInt32(4),
+                            canthoras = dr.GetInt32(5),
+                            tiposesion = dr.GetString(6),
                         };
                         temporal.Add(obj);
                     }
@@ -182,7 +182,7 @@ namespace ProyectoIntegradorII.Controllers
             return temporal;
         }
 
-        public IActionResult Sesiones()
+        public IActionResult Servicios()
         {
             ViewBag.usuario = HttpContext.Session.GetString(sesion);
 
@@ -195,7 +195,7 @@ namespace ProyectoIntegradorII.Controllers
             ViewBag.tipo = inf.tipousuario;
 
             var usuariosesion = HttpContext.Session.GetString(sesion);
-            IEnumerable<ServicioInf> temporal = solicitudes(usuariosesion);
+            IEnumerable<ServicioInf> temporal = servicios(usuariosesion);
 
             return View(temporal);
         }

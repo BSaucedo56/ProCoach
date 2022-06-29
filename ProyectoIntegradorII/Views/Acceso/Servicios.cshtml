@@ -74,10 +74,15 @@
             <span>General</span>
           </li>
           <li>
+            <a asp-area="" asp-controller="Acceso" asp-action="Servicios">
+                <i class="fa fa-envelope"></i>
+                <span>Servicios</span>
+            </a>
+          </li>
+          <li>
             <a asp-area="" asp-controller="Acceso" asp-action="Sesiones">
                 <i class="fa fa-envelope"></i>
                 <span>Sesiones</span>
-                
             </a>
           </li>
           <li>
@@ -219,35 +224,123 @@
     </div>*@
   </nav>
 
-  <main>
-      <h1 style="color: black; margin: 30px; font-family: lemon; text-align: center;">Sesiones</h1>
-      <div style="color: black; margin: 30px; font-family: lemon; text-align: center;">
+  <main style="margin-left: 260px;">
+      <h1 style="color: black; margin: 30px; font-family: lemon; text-align: center;">Servicios</h1>
+      <div style="color: black; margin: -30px; font-family: lemon; text-align: center; width: 110%; margin-top: 30px;">
 
-        <!--agregar la vista parcial-->
+      <table class="table table-light border rounded">
+        <thead >
+            <tr>
+                <th class="thcoach11">
+                    @ViewBag.tipoU
+                </th>
+                <th class="thcoach12">
+                    Tipo de Servicio
+                </th>
+                <th class="thcoach13">
+                    Precio
+                </th>
+                <th class="thcoach14">
+                    Cantidad de Sesiones
+                </th>
+                <th class="thcoach15">
+                    Cantidad de Horas
+                </th>
+                <th class="thcoach16">
+                    Tipo de Sesión
+                </th>
+                <th>
+                
+                </th>
+                <th>
+                
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td class="thcoach21" style="text-align: center">
+                    @Html.DisplayFor(modelItem => item.nombresApellidos)
+                </td>
+                <td class="thcoach22" style="text-align: center">
+                    @Html.DisplayFor(modelItem => item.tiposervicio)
+                </td >
+                <td class="thcoach23" style="text-align: center">
+                    @Html.DisplayFor(modelItem => item.precio)
+                </td>
+                <td class="thcoach24" style="text-align: center">
+                    @Html.DisplayFor(modelItem => item.cantsesiones)
+                </td>
+                <td class="thcoach25" style="text-align: center">
+                    @Html.DisplayFor(modelItem => item.canthoras)
+                </td>
+                <td class="thcoach26" style="text-align: center">
+                    @Html.DisplayFor(modelItem => item.tiposesion)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
 
-    <table class="table center" >
-    <thead>
+@*      <table class="table table-dark table-bordered">
+      <thead>
         <tr>
+          <th scope="col">@ViewBag.tipoU</th>
+          <th scope="col">Tipo de Servicio</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Cantidad de Sesiones</th>
+          <th scope="col">Cantidad de Horas</th>
+          <th scope="col">Tipo de Sesión</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      @foreach (var item in Model) {
+        <tr>
+          <td>@Html.DisplayFor(modelItem => item.nombresApellidos)</td>
+          <td>@Html.DisplayFor(modelItem => item.tiposervicio)</td>
+          <td>@Html.DisplayFor(modelItem => item.precio)</td>
+          <td>@Html.DisplayFor(modelItem => item.cantsesiones)</td>
+          <td>@Html.DisplayFor(modelItem => item.canthoras)</td>
+          <td>@Html.DisplayFor(modelItem => item.tiposesion)</td>
+          <td><button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button></td>
+          <td><button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button></td>
+        </tr>
+      }
+      </tbody>
+    </table>*@
+
+@*    <table class="table center table-striped table-dark table-bordered" style="font-size: 14px;">
+    <thead>
+        <tr>*@
 @*            <th>
                 @Html.DisplayNameFor(model => model.nombre_usuario)
             </th>*@
-            <th>
+            @*<th>
                 @ViewBag.tipoU
-            </th>
-            <th>
-                Fecha de Sesión
-            </th>
-            <th>
-                Tipo de Sesión
             </th>
             <th>
                 Tipo de Servicio
             </th>
             <th>
-                Total de Horas por Sessiones
+                Precio
             </th>
             <th>
-                Monto
+                Cantidad de Sesiones
+            </th>
+            <th>
+                Cantidad de Horas
+            </th>
+            <th>
+                Tipo de Sesión
             </th>
             <th></th>
             <th></th>
@@ -255,41 +348,41 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-   @*         <td>
+        <tr>*@
+   @*       <td>
                 @Html.DisplayFor(modelItem => item.nombre_usuario)
             </td>*@
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.nombresApellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fechasesion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tiposesion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.tiposervicio)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.totalHoras)
+                @Html.DisplayFor(modelItem => item.precio)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.monto)
+                @Html.DisplayFor(modelItem => item.cantsesiones)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.canthoras)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tiposesion)
+            </td>
+            <td>*@
                 @*@Html.ActionLink("Aceptar", "Edit", new { @class = "btn btn-info" })*@
-                <button type="button" class="btn btn-success">Aceptar</button>
+               @* <button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button>
             </td>
-            <td>
+            <td>*@
                 @*@Html.ActionLink("Rechazar", "Delete", new { @class = "btn btn-info" })*@
-                <button type="button" class="btn btn-danger">Rechazar</button>
+@*                <button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button>
             </td>
         </tr>
 }
     </tbody>
 </table>
-
+*@
 
       </div>
   </main>
