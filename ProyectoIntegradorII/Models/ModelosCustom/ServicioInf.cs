@@ -2,6 +2,7 @@
 {
     public class ServicioInf
     {
+        public int id_servicio { get; set; }
         public string nombre_usuario { get; set; }
         public string nombresApellidos { get; set; }
         public string tiposervicio { get; set; }
@@ -9,5 +10,6 @@
         public int cantsesiones { get; set; }
         public int canthoras { get; set; }
         public string tiposesion { get; set; }
+        public string correo { get; set; }
     }
 }

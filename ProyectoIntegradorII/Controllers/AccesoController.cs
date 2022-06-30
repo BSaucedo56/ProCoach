@@ -159,13 +159,15 @@ namespace ProyectoIntegradorII.Controllers
                     {
                         ServicioInf obj = new ServicioInf()
                         {
-                            nombre_usuario = dr.GetString(0),
-                            nombresApellidos = dr.GetString(1),
-                            tiposervicio = dr.GetString(2),
-                            precio = dr.GetDecimal(3),
-                            cantsesiones = dr.GetInt32(4),
-                            canthoras = dr.GetInt32(5),
-                            tiposesion = dr.GetString(6),
+                            id_servicio = dr.GetInt32(0),
+                            nombre_usuario = dr.GetString(1),
+                            nombresApellidos = dr.GetString(2),
+                            tiposervicio = dr.GetString(3),
+                            precio = dr.GetDecimal(4),
+                            cantsesiones = dr.GetInt32(5),
+                            canthoras = dr.GetInt32(6),
+                            tiposesion = dr.GetString(7),
+                            correo = dr.GetString(8),
                         };
                         temporal.Add(obj);
                     }
@@ -182,7 +184,7 @@ namespace ProyectoIntegradorII.Controllers
             return temporal;
         }
 
-        public IActionResult Servicios()
+        public IActionResult Servicios(int p = 1)
         {
             ViewBag.usuario = HttpContext.Session.GetString(sesion);
 
@@ -197,7 +199,16 @@ namespace ProyectoIntegradorII.Controllers
             var usuariosesion = HttpContext.Session.GetString(sesion);
             IEnumerable<ServicioInf> temporal = servicios(usuariosesion);
 
-            return View(temporal);
+            int f = 5;
+            int c = temporal.Count();
+
+            int npags = c % f == 0 ? c / f : c / f + 1;
+
+            ViewBag.p = p;
+            ViewBag.npags = npags;
+            ViewBag.etiqueta = string.Concat((p + 1), " de ", npags);
+
+            return View(temporal.Skip(p * f).Take(f));
         }
 
         IEnumerable<SesionInf> sesiones(string nombre_usuario)
@@ -218,10 +229,12 @@ namespace ProyectoIntegradorII.Controllers
                     {
                         SesionInf obj = new SesionInf()
                         {
-                            nombre_usuario = dr.GetString(0),
-                            nombresApellidos = dr.GetString(1),
-                            fechasesion = dr.GetDateTime(2),
-                            precio = dr.GetDecimal(3),
+                            id_servicio = dr.GetInt32(0),
+                            nombre_usuario = dr.GetString(1),
+                            nombresApellidos = dr.GetString(2),
+                            fechasesion = dr.GetDateTime(3),
+                            precio = dr.GetDecimal(4),
+                            correo = dr.GetString(5),
                         };
                         temporal.Add(obj);
                     }
@@ -238,7 +251,7 @@ namespace ProyectoIntegradorII.Controllers
             return temporal;
         }
 
-        public IActionResult Sesiones()
+        public IActionResult Sesiones(int p = 1)
         {
             ViewBag.usuario = HttpContext.Session.GetString(sesion);
 
@@ -253,7 +266,16 @@ namespace ProyectoIntegradorII.Controllers
             var usuariosesion = HttpContext.Session.GetString(sesion);
             IEnumerable<SesionInf> temporal = sesiones(usuariosesion);
 
-            return View(temporal);
+            int f = 5;
+            int c = temporal.Count();
+
+            int npags = c % f == 0 ? c / f : c / f + 1;
+
+            ViewBag.p = p;
+            ViewBag.npags = npags;
+            ViewBag.etiqueta = string.Concat((p + 1), " de ", npags);
+
+            return View(temporal.Skip(p * f).Take(f));
         }
 
         //FALTA
