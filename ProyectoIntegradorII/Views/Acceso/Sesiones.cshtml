@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProyectoIntegradorII.Models.ModelosCustom.SesionInf>
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ProyectoIntegradorII.Models.ModelosCustom.SesionInf>
 
 @{
     ViewData["Title"] = "Sesiones";
@@ -86,7 +87,7 @@
             </a>
           </li>
           <li>
-            <a href="@Url.Action("Login","Acceso")">
+            <a asp-area="" asp-controller="Acceso" asp-action="CerrarSesion">
                 <i class="fa fa-power-off"></i>
                 <span>Cerrar Sesión</span>
             </a>
@@ -260,11 +261,59 @@
                 <td class="thcoach24" style="text-align: center">
                     @Html.DisplayFor(modelItem => item.precio)
                 </td>
-                <td>
-                    <button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button>
+                <td class="thcoach24" style="text-align: center">
+                @if (User.IsInRole("Coach") || User.IsInRole("Cliente"))
+                {
+                        switch (item.checkint)
+                        {
+                            case "No Calificado":
+                                    <p style="color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Pendiente</strong></p>
+                            break;
+                            case "Aceptado":
+                                    <p style="color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Aceptado</strong></p>
+                            break;
+                        }
+                }
+                @if (User.IsInRole("Coach"))
+                {
+                        switch (item.checkint)
+                        {
+                            case "Servicio Confirmado":
+                                    <p style="color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Servicio Confirmado</strong></p>
+                            break;
+                        }
+                }
+                @if (User.IsInRole("Cliente"))
+                {
+                        switch (item.checkint)
+                        {
+                            case "Servicio Confirmado":
+                                    <p style="color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Por Confirmar</strong></p>
+                            break;
+                        }
+                }
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button>
+                @if (User.IsInRole("Coach"))
+                {
+                        switch (item.checkint)
+                        {
+                            case "Servicio Confirmado":
+                                    <button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button>
+                            break;
+                        }
+                }
+                </td>
+                <td>
+                @if (User.IsInRole("Coach"))
+                {
+                        switch (item.checkint)
+                        {
+                            case "Servicio Confirmado":
+                                    <button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button>
+                            break;
+                        }
+                }
                 </td>
             </tr>
     }

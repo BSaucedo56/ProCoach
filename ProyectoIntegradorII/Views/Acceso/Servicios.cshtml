@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProyectoIntegradorII.Models.ModelosCustom.ServicioInf>
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ProyectoIntegradorII.Models.ModelosCustom.ServicioInf>
 
 @{
     ViewData["Title"] = "Solicitudes";
@@ -86,7 +87,7 @@
             </a>
           </li>
           <li>
-            <a href="@Url.Action("Login","Acceso")">
+            <a asp-area="" asp-controller="Acceso" asp-action="CerrarSesion">
                 <i class="fa fa-power-off"></i>
                 <span>Cerrar Sesión</span>
             </a>
@@ -278,11 +279,50 @@
                 <td class="thcoach26" style="text-align: center">
                     @Html.DisplayFor(modelItem => item.tiposesion)
                 </td>
-                <td>
-                    <button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button>
+                <td class="thcoach24" style="text-align: center">
+                @if (User.IsInRole("Coach") || User.IsInRole("Cliente"))
+                {
+                    switch (item.checkint)
+                    {
+                        case "No Calificado":
+                                <p style="color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Pendiente</strong></p>
+                        break;
+                    }
+                }
+                @if (User.IsInRole("Coach") || User.IsInRole("Cliente"))
+                {
+                    switch (item.checkint)
+                    {
+                        case "Aceptado":
+                                <p style="color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Aceptado</strong></p>
+                        break;
+                    }
+                }
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button>
+                @if (User.IsInRole("Coach"))
+                {
+                    switch (item.checkint)
+                    {
+                        case "No Calificado":
+                                //<button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button>
+                                //<input type="submit" value="Aceptar" id="Submit" class="btn btn-success" style="font-size: 14px;" onclick="location.href='@Url.Action("Acceso", "AceptarServicio")'" />
+                                <a asp-action="AceptarServicio" asp-controller="Acceso" class="btn btn-success" style="font-size: 14px;">Aceptar</a>
+                        break;
+                    }
+                }
+                </td>
+                <td>
+                @if (User.IsInRole("Coach"))
+                {
+                    switch (item.checkint)
+                    {
+                        case "No Calificado":
+                                //<button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button>
+                                <a asp-action="AceptarSesion" asp-controller="Acceso" class="btn btn-danger" style="font-size: 14px;">Rechazar</a>
+                        break;
+                    }
+                }
                 </td>
             </tr>
     }
@@ -296,103 +336,7 @@
         @Html.ActionLink(">>","Servicios","Acceso",new{p=(@ViewBag.p>=@ViewBag.npags-1 ? @ViewBag.npags-1 : @ViewBag.p+1)},new{@class="btn btn-primary"})
         @Html.ActionLink(">|","Servicios","Acceso",new{p=@ViewBag.npags-1},new{@class="btn btn-primary"})
     </div>
-
-@*      <table class="table table-dark table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">@ViewBag.tipoU</th>
-          <th scope="col">Tipo de Servicio</th>
-          <th scope="col">Precio</th>
-          <th scope="col">Cantidad de Sesiones</th>
-          <th scope="col">Cantidad de Horas</th>
-          <th scope="col">Tipo de Sesión</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-      @foreach (var item in Model) {
-        <tr>
-          <td>@Html.DisplayFor(modelItem => item.nombresApellidos)</td>
-          <td>@Html.DisplayFor(modelItem => item.tiposervicio)</td>
-          <td>@Html.DisplayFor(modelItem => item.precio)</td>
-          <td>@Html.DisplayFor(modelItem => item.cantsesiones)</td>
-          <td>@Html.DisplayFor(modelItem => item.canthoras)</td>
-          <td>@Html.DisplayFor(modelItem => item.tiposesion)</td>
-          <td><button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button></td>
-          <td><button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button></td>
-        </tr>
-      }
-      </tbody>
-    </table>*@
-
-@*    <table class="table center table-striped table-dark table-bordered" style="font-size: 14px;">
-    <thead>
-        <tr>*@
-@*            <th>
-                @Html.DisplayNameFor(model => model.nombre_usuario)
-            </th>*@
-            @*<th>
-                @ViewBag.tipoU
-            </th>
-            <th>
-                Tipo de Servicio
-            </th>
-            <th>
-                Precio
-            </th>
-            <th>
-                Cantidad de Sesiones
-            </th>
-            <th>
-                Cantidad de Horas
-            </th>
-            <th>
-                Tipo de Sesión
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>*@
-   @*       <td>
-                @Html.DisplayFor(modelItem => item.nombre_usuario)
-            </td>*@
-@*            <td>
-                @Html.DisplayFor(modelItem => item.nombresApellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tiposervicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cantsesiones)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.canthoras)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tiposesion)
-            </td>
-            <td>*@
-                @*@Html.ActionLink("Aceptar", "Edit", new { @class = "btn btn-info" })*@
-               @* <button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button>
-            </td>
-            <td>*@
-                @*@Html.ActionLink("Rechazar", "Delete", new { @class = "btn btn-info" })*@
-@*                <button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-*@
-
-      </div>
+  </div>
   </main>
   <!-- sidebar-wrapper  -->
   @*<main class="page-content">

@@ -6,7 +6,10 @@ using ProyectoIntegradorII.Models;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorII.Datos;
 using ProyectoIntegradorII.Models.ModelosCustom;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 namespace ProyectoIntegradorII.Controllers
 {
     public class AccesoController : Controller
@@ -49,6 +52,37 @@ namespace ProyectoIntegradorII.Controllers
 
         }
 
+        IEnumerable<Usuario> ListaUsuario()
+        {
+            List<Usuario> temporal = new List<Usuario>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                SqlCommand cmd = new SqlCommand("exec usp_valida_usuario", cn);
+                cn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    Usuario obj = new Usuario()
+                    {
+                        idUsuario = dr.GetInt32(0),
+                        nombre_usuario = dr.GetString(1),
+                        contrasena = dr.GetString(2),
+                        id_tipousuario = dr.GetInt32(3),
+                    };
+                    temporal.Add(obj);
+                }
+            }
+            return temporal;
+        }
+
+        Usuario ValidarUsuario(string usuario, string clave)
+        {
+            return ListaUsuario().Where(u => u.nombre_usuario == usuario && u.contrasena == clave).FirstOrDefault();
+        }
+
         public async Task<IActionResult> Login()
         {
             HttpContext.Session.SetString(sesion, ""); //Asigno el valor "" al session
@@ -70,6 +104,33 @@ namespace ProyectoIntegradorII.Controllers
             
             //Se ingresaron los datos
             string xusuario = Ingreso(reg.nombre_usuario, reg.contrasena);
+            var _usuario = ValidarUsuario(reg.nombre_usuario, reg.contrasena);
+
+            if (_usuario != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, _usuario.nombre_usuario),
+                    new Claim("nombre_usuario", _usuario.nombre_usuario)
+                };
+
+                if (_usuario.id_tipousuario == 1)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, "Cliente"));
+                }
+
+                if (_usuario.id_tipousuario == 2)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, "Coach"));
+                }
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+                HttpContext.Session.SetString(sesion, xusuario);
+            }
+
 
             if (string.IsNullOrEmpty(xusuario))
             {
@@ -78,9 +139,6 @@ namespace ProyectoIntegradorII.Controllers
                 return View(await Task.Run(() => reg));
 
             }
-
-            //Si todo está ok, se manda a la vista logueado
-            HttpContext.Session.SetString(sesion, xusuario);
 
             return RedirectToAction("Logueado", "Acceso");
 
@@ -168,6 +226,7 @@ namespace ProyectoIntegradorII.Controllers
                             canthoras = dr.GetInt32(6),
                             tiposesion = dr.GetString(7),
                             correo = dr.GetString(8),
+                            checkint = dr.GetString(9),
                         };
                         temporal.Add(obj);
                     }
@@ -235,6 +294,7 @@ namespace ProyectoIntegradorII.Controllers
                             fechasesion = dr.GetDateTime(3),
                             precio = dr.GetDecimal(4),
                             correo = dr.GetString(5),
+                            checkint = dr.GetString(6),
                         };
                         temporal.Add(obj);
                     }
@@ -278,11 +338,11 @@ namespace ProyectoIntegradorII.Controllers
             return View(temporal.Skip(p * f).Take(f));
         }
 
-        //FALTA
         public async Task<IActionResult> CerrarSesion()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return View();
+            return RedirectToAction("Login", "Acceso");
         }
     }
 }

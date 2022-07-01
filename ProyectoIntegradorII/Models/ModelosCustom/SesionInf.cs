@@ -8,5 +8,6 @@
         public DateTime fechasesion { get; set; }
         public decimal precio { get; set; }
         public string correo { get; set; }
+        public string checkint { get; set; }
     }
 }
