@@ -226,10 +226,10 @@
   </nav>
 
   <main style="margin-left: 260px;">
-      <h1 style="color: black; margin: 30px; font-family: lemon; text-align: center;">Sesiones</h1>
+      <h1 style="color: white; margin: 30px; font-family: lemon; text-align: center; text-shadow: black 0.1em 0.1em 0.2em; -webkit-text-stroke: 2px black;">Sesiones</h1>
       <div style="color: black; margin: -30px; font-family: lemon; text-align: center; width: 110%; margin-top: 30px;">
 
-      <table class="table table-light border rounded">
+      <table class="table table-light border rounded" style="box-shadow: 0 0 20px black; border-collapse: collapse; border-radius: 1em; overflow: hidden;">
         <thead >
             <tr>
                 <th class="thcoach11">
@@ -266,7 +266,7 @@
                 {
                         switch (item.checkint)
                         {
-                            case "No Calificado":
+                            case "Pendiente":
                                     <p style="color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Pendiente</strong></p>
                             break;
                             case "Aceptado":
@@ -281,6 +281,9 @@
                             case "Servicio Confirmado":
                                     <p style="color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Servicio Confirmado</strong></p>
                             break;
+                            case "Servicio Rechazado":
+                                <p style="color: white; text-shadow: 2px 2px 0 red, 2px -2px 0 red, -2px 2px 0 red, -2px -2px 0 red, 2px 0px 0 red, 0px 2px 0 red, -2px 0px 0 red, 0px -2px 0 red;"><strong>Rechazado</strong></p>
+                            break;
                         }
                 }
                 @if (User.IsInRole("Cliente"))
@@ -290,16 +293,8 @@
                             case "Servicio Confirmado":
                                     <p style="color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Por Confirmar</strong></p>
                             break;
-                        }
-                }
-                </td>
-                <td>
-                @if (User.IsInRole("Coach"))
-                {
-                        switch (item.checkint)
-                        {
-                            case "Servicio Confirmado":
-                                    <button type="button" class="btn btn-success" style="font-size: 14px;">Aceptar</button>
+                            case "Servicio Rechazado":
+                                <p style="color: white; text-shadow: 2px 2px 0 red, 2px -2px 0 red, -2px 2px 0 red, -2px -2px 0 red, 2px 0px 0 red, 0px 2px 0 red, -2px 0px 0 red, 0px -2px 0 red;"><strong>Rechazado</strong></p>
                             break;
                         }
                 }
@@ -310,7 +305,18 @@
                         switch (item.checkint)
                         {
                             case "Servicio Confirmado":
-                                    <button type="button" class="btn btn-danger" style="font-size: 14px;">Rechazar</button>
+                                    <a asp-action="SesionAceptar" asp-controller="Acceso" class="btn btn-success" style="font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" asp-route-idservicio="@item.id_servicio">Aceptar</a>
+                            break;
+                        }
+                }
+                </td>
+                <td>
+                @if (User.IsInRole("Coach"))
+                {
+                        switch (item.checkint)
+                        {
+                            case "Servicio Confirmado":
+                                    <a asp-action="ServicioRechazar" asp-controller="Acceso" class="btn btn-danger" style="font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" asp-route-idservicio="@item.id_servicio">Rechazar</a>
                             break;
                         }
                 }

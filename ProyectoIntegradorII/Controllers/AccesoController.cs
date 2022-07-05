@@ -359,5 +359,121 @@ namespace ProyectoIntegradorII.Controllers
 
             return RedirectToAction("Login", "Acceso");
         }
+
+        public IActionResult ServicioAceptar(int idservicio)
+        {
+            var aceptarSesion = AceptarServicio(idservicio);
+
+            return RedirectToAction("Servicios", new { p = 0 });
+        }
+
+        public string AceptarServicio(int idservicio)
+        {
+            string mensaje = "";
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("USP_ACEPTAR_SERVICIO_PRUEBA", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    mensaje = "Servicio Actualizado";
+                }
+                catch (Exception ex) { mensaje = ex.Message; }
+                finally { cn.Close(); }
+            }
+            return mensaje;
+        }
+
+        public IActionResult ServicioRechazar(int idservicio)
+        {
+            var aceptarSesion = RechazarServicio(idservicio);
+
+            return RedirectToAction("Servicios", new { p = 0 });
+        }
+
+        public string RechazarServicio(int idservicio)
+        {
+            string mensaje = "";
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("USP_RECHAZAR_SERVICIO", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    mensaje = "Servicio Actualizado";
+                }
+                catch (Exception ex) { mensaje = ex.Message; }
+                finally { cn.Close(); }
+            }
+            return mensaje;
+        }
+
+        public IActionResult SesionAceptar(int idservicio)
+        {
+            var aceptarSesion = AceptarSesion(idservicio);
+
+            return RedirectToAction("Sesiones", new { p = 0 });
+        }
+
+        public string AceptarSesion(int idservicio)
+        {
+            string mensaje = "";
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("USP_ACEPTAR_SERVICIO_SESION", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    mensaje = "Sesion Actualizado";
+                }
+                catch (Exception ex) { mensaje = ex.Message; }
+                finally { cn.Close(); }
+            }
+            return mensaje;
+        }
+
+        public IActionResult SesionRechazar(int idservicio)
+        {
+            var aceptarSesion = AceptarRechazar(idservicio);
+
+            return RedirectToAction("Sesiones", new { p = 0 });
+        }
+
+        public string AceptarRechazar(int idservicio)
+        {
+            string mensaje = "";
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("USP_RECHAZAR_SESION", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    mensaje = "Sesion Actualizado";
+                }
+                catch (Exception ex) { mensaje = ex.Message; }
+                finally { cn.Close(); }
+            }
+            return mensaje;
+        }
     }
 }
