@@ -245,19 +245,26 @@ namespace ProyectoIntegradorII.Controllers
 
         public IActionResult Servicios(int p = 1)
         {
-            ViewBag.usuario = HttpContext.Session.GetString(sesion);
+            var sesionUsuario = HttpContext.Session.GetString(sesion);
+            ViewBag.usuario = sesionUsuario;
 
             InfUsuario infU = new InfUsuario();
-            infU.nombre_usuario = HttpContext.Session.GetString(sesion);
+            infU.nombre_usuario = sesionUsuario;
             var inf = usuarioinfo(infU.nombre_usuario).Where(c => c.nombre_usuario == infU.nombre_usuario).FirstOrDefault();
 
-            ViewBag.nombre = inf.nombresApellidos;
-            ViewBag.foto = inf.foto;
-            ViewBag.tipo = inf.tipousuario;
-
-            var usuariosesion = HttpContext.Session.GetString(sesion);
+            if (inf != null)
+            {
+                ViewBag.nombre = inf.nombresApellidos;
+                ViewBag.foto = inf.foto;
+                ViewBag.tipo = inf.tipousuario;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+                
+            var usuariosesion = sesionUsuario;
             IEnumerable<ServicioInf> temporal = servicios(usuariosesion);
-
             int f = 5;
             int c = temporal.Count();
 
@@ -313,17 +320,25 @@ namespace ProyectoIntegradorII.Controllers
 
         public IActionResult Sesiones(int p = 1)
         {
-            ViewBag.usuario = HttpContext.Session.GetString(sesion);
+            var sesionUsuario = HttpContext.Session.GetString(sesion);
+            ViewBag.usuario = sesionUsuario;
 
             InfUsuario infU = new InfUsuario();
-            infU.nombre_usuario = HttpContext.Session.GetString(sesion);
+            infU.nombre_usuario = sesionUsuario;
             var inf = usuarioinfo(infU.nombre_usuario).Where(c => c.nombre_usuario == infU.nombre_usuario).FirstOrDefault();
 
-            ViewBag.nombre = inf.nombresApellidos;
-            ViewBag.foto = inf.foto;
-            ViewBag.tipo = inf.tipousuario;
-
-            var usuariosesion = HttpContext.Session.GetString(sesion);
+            if (inf != null)
+            {
+                ViewBag.nombre = inf.nombresApellidos;
+                ViewBag.foto = inf.foto;
+                ViewBag.tipo = inf.tipousuario;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+            
+            var usuariosesion = sesionUsuario;
             IEnumerable<SesionInf> temporal = sesiones(usuariosesion);
 
             int f = 5;
