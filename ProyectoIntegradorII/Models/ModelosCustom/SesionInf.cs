@@ -2,6 +2,7 @@
 {
     public class SesionInf
     {
+        public int id_sesion { get; set; }
         public int id_servicio { get; set; }
         public string nombre_usuario { get; set; }
         public string nombresApellidos { get; set; }

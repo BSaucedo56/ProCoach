@@ -12,5 +12,8 @@
         public string tiposesion { get; set; }
         public string correo { get; set; }
         public string checkint { get; set; }
+        public int idNivelSatisfacion { get; set; }
+        public string nivelSatisfacion { get; set; }
+        public string color { get; set; }
     }
 }

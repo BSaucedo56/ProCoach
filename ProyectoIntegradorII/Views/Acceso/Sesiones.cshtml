@@ -232,45 +232,68 @@
       <table class="table table-light border rounded" style="box-shadow: 0 0 20px black; border-collapse: collapse; border-radius: 1em; overflow: hidden;">
         <thead >
             <tr>
-                <th class="thcoach11">
+                <th class="thcoach11" style="text-align: center; vertical-align: middle;">
                     @ViewBag.tipoU
                 </th>
-                <th class="thcoach12">
+                <th class="thcoach12" style="text-align: center; vertical-align: middle;">
                     Fecha Sesion
                 </th>
-                <th class="thcoach13">
+                <th class="thcoach13" style="text-align: center; vertical-align: middle;">
                     Precio
                 </th>
-                <th>
-                
+                @if (User.IsInRole("Coach"))
+                {
+                <th class="thcoach13" style="text-align: center; vertical-align: middle;">
+                    Estado
                 </th>
-                <th>
-                
+                <th class="thcoach13" style="text-align: center; vertical-align: middle;">
+                    Enlace Zoom
                 </th>
+                }
+                @if (User.IsInRole("Cliente"))
+                {
+                <th class="thcoach13" style="text-align: center; vertical-align: middle;">
+                    Estado
+                </th>
+                <th class="thcoach13" style="text-align: center; vertical-align: middle;">
+                    Enlace Zoom
+                </th>
+                }
             </tr>
         </thead>
         <tbody>
     @foreach (var item in Model) {
             <tr>
-                <td class="thcoach22" style="text-align: center">
+                <td class="thcoach22" style="text-align: center; vertical-align: middle;">
                     @Html.DisplayFor(modelItem => item.nombresApellidos)
                 </td >
-                <td class="thcoach23" style="text-align: center">
+                <td class="thcoach23" style="text-align: center; vertical-align: middle;">
                     @Html.DisplayFor(modelItem => item.fechasesion)
                 </td>
-                <td class="thcoach24" style="text-align: center">
+                <td class="thcoach24" style="text-align: center; vertical-align: middle;">
                     @Html.DisplayFor(modelItem => item.precio)
                 </td>
-                <td class="thcoach24" style="text-align: center">
-                @if (User.IsInRole("Coach") || User.IsInRole("Cliente"))
+                @if (User.IsInRole("Cliente"))
+                {
+                    switch (item.checkint)
+                    {             
+                        case "Pendiente":
+                                <td class="thcoach24" style="text-align: center; vertical-align: middle;">
+                                    <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Pendiente</strong></p>
+                                </td>
+                        break;
+                    }
+                }
+                @if (User.IsInRole("Coach"))
                 {
                         switch (item.checkint)
                         {
                             case "Pendiente":
-                                    <p style="color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Pendiente</strong></p>
-                            break;
-                            case "Aceptado":
-                                    <p style="color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Aceptado</strong></p>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a asp-action="ActualizarSesiones" asp-controller="Acceso" class="btn btn-success" style="margin-right: 10px; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" asp-route-idsesion="@item.id_sesion" asp-route-idservicio="@item.id_servicio" asp-route-coachcheckint="Aceptado">Aceptar</a>
+                                    <a asp-action="ActualizarSesiones" asp-controller="Acceso" class="btn btn-danger" style="font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" asp-route-idsesion="@item.id_sesion" asp-route-idservicio="@item.id_servicio" asp-route-coachcheckint="Cancelado">Rechazar</a>
+                                </td>
+                                <td></td>
                             break;
                         }
                 }
@@ -278,49 +301,57 @@
                 {
                         switch (item.checkint)
                         {
-                            case "Servicio Confirmado":
-                                    <p style="color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Servicio Confirmado</strong></p>
+                            case "Aceptado":
+                                <td class="thcoach24" style="text-align: center; vertical-align: middle;">
+                                    <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Aceptado</strong></p>
+                                </td>
                             break;
-                            case "Servicio Rechazado":
-                                <p style="color: white; text-shadow: 2px 2px 0 red, 2px -2px 0 red, -2px 2px 0 red, -2px -2px 0 red, 2px 0px 0 red, 0px 2px 0 red, -2px 0px 0 red, 0px -2px 0 red;"><strong>Rechazado</strong></p>
+                            case "Cancelado":
+                                <td class="thcoach24" style="text-align: center; vertical-align: middle;">
+                                    <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 red, 2px -2px 0 red, -2px 2px 0 red, -2px -2px 0 red, 2px 0px 0 red, 0px 2px 0 red, -2px 0px 0 red, 0px -2px 0 red;"><strong>Cancelado</strong></p>
+                                </td>
+                                <td></td>
                             break;
                         }
+                }
+                @if (User.IsInRole("Cliente")){
+                    switch (item.checkint)
+                        {
+                            case "Aceptado":
+                                <td class="thcoach24" style="text-align: center; vertical-align: middle;">
+                                    <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Aceptado</strong></p>
+                                </td>
+                            break;
+                            case "Cancelado":
+                                <td class="thcoach24" style="text-align: center; vertical-align: middle;">
+                                    <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 red, 2px -2px 0 red, -2px 2px 0 red, -2px -2px 0 red, 2px 0px 0 red, 0px 2px 0 red, -2px 0px 0 red, 0px -2px 0 red;"><strong>Cancelado</strong></p>
+                                </td>
+                                <td></td>
+                            break;
+                        }                    
                 }
                 @if (User.IsInRole("Cliente"))
-                {
-                        switch (item.checkint)
+                {   
+                    switch (item.checkint)
                         {
-                            case "Servicio Confirmado":
-                                    <p style="color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Por Confirmar</strong></p>
-                            break;
-                            case "Servicio Rechazado":
-                                <p style="color: white; text-shadow: 2px 2px 0 red, 2px -2px 0 red, -2px 2px 0 red, -2px -2px 0 red, 2px 0px 0 red, 0px 2px 0 red, -2px 0px 0 red, 0px -2px 0 red;"><strong>Rechazado</strong></p>
+                            case "Aceptado":
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a href="https://zoom.us/" target="_blank"><img src="~/imagenes/zoom.png" width="50" height="50"></a>
+                                </td>
                             break;
                         }
                 }
-                </td>
-                <td>
                 @if (User.IsInRole("Coach"))
-                {
-                        switch (item.checkint)
+                {   
+                    switch (item.checkint)
                         {
-                            case "Servicio Confirmado":
-                                    <a asp-action="SesionAceptar" asp-controller="Acceso" class="btn btn-success" style="font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" asp-route-idservicio="@item.id_servicio">Aceptar</a>
+                            case "Aceptado":
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a href="https://zoom.us/" target="_blank"><img src="~/imagenes/zoom.png" width="50" height="50"></a>
+                                </td>
                             break;
                         }
                 }
-                </td>
-                <td>
-                @if (User.IsInRole("Coach"))
-                {
-                        switch (item.checkint)
-                        {
-                            case "Servicio Confirmado":
-                                    <a asp-action="ServicioRechazar" asp-controller="Acceso" class="btn btn-danger" style="font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" asp-route-idservicio="@item.id_servicio">Rechazar</a>
-                            break;
-                        }
-                }
-                </td>
             </tr>
     }
         </tbody>

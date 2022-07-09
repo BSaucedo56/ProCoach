@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace ProyectoIntegradorII.Controllers
 {
     public class AccesoController : Controller
@@ -227,6 +229,9 @@ namespace ProyectoIntegradorII.Controllers
                             tiposesion = dr.GetString(7),
                             correo = dr.GetString(8),
                             checkint = dr.GetString(9),
+                            idNivelSatisfacion = dr.GetInt32(10),
+                            nivelSatisfacion = dr.GetString(11),
+                            color = dr.GetString(12),
                         };
                         temporal.Add(obj);
                     }
@@ -238,6 +243,30 @@ namespace ProyectoIntegradorII.Controllers
                 finally
                 {
                     cn.Close();
+                }
+            }
+            return temporal;
+        }
+
+        IEnumerable<NivelSatisfacion> listaNivelSatisfacion()
+        {
+            List<NivelSatisfacion> temporal = new List<NivelSatisfacion>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                SqlCommand cmd = new SqlCommand("exec USP_LISTADO_NIVELSATISFACION", cn);
+                cn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    NivelSatisfacion obj = new NivelSatisfacion()
+                    {
+                        idNivelSatisfacion = dr.GetInt32(0),
+                        nivelSatisfacion = dr.GetString(1),
+                    };
+                    temporal.Add(obj);
                 }
             }
             return temporal;
@@ -274,6 +303,16 @@ namespace ProyectoIntegradorII.Controllers
             ViewBag.npags = npags;
             ViewBag.etiqueta = string.Concat((p + 1), " de ", npags);
 
+            ServicioInf nuevo = new ServicioInf();
+            nuevo.nombre_usuario = inf.nombre_usuario;
+            var infser = servicios(nuevo.nombre_usuario).Where(c => c.nombre_usuario == nuevo.nombre_usuario).FirstOrDefault();
+
+            if (infser != null)
+            {
+                ViewBag.idservicio = infser.id_servicio;
+                ViewBag.idNivelSatisfacion = new SelectList(listaNivelSatisfacion(), "idNivelSatisfacion", "nivelSatisfacion", infser.idNivelSatisfacion);
+            }
+
             return View(temporal.Skip(p * f).Take(f));
         }
 
@@ -295,13 +334,14 @@ namespace ProyectoIntegradorII.Controllers
                     {
                         SesionInf obj = new SesionInf()
                         {
-                            id_servicio = dr.GetInt32(0),
-                            nombre_usuario = dr.GetString(1),
-                            nombresApellidos = dr.GetString(2),
-                            fechasesion = dr.GetDateTime(3),
-                            precio = dr.GetDecimal(4),
-                            correo = dr.GetString(5),
-                            checkint = dr.GetString(6),
+                            id_sesion = dr.GetInt32(0),
+                            id_servicio = dr.GetInt32(1),
+                            nombre_usuario = dr.GetString(2),
+                            nombresApellidos = dr.GetString(3),
+                            fechasesion = dr.GetDateTime(4),
+                            precio = dr.GetDecimal(5),
+                            correo = dr.GetString(6),
+                            checkint = dr.GetString(7),
                         };
                         temporal.Add(obj);
                     }
@@ -360,14 +400,14 @@ namespace ProyectoIntegradorII.Controllers
             return RedirectToAction("Login", "Acceso");
         }
 
-        public IActionResult ServicioAceptar(int idservicio)
+        public IActionResult ActualizarServicios(int idservicio, string coachcheckint)
         {
-            var aceptarSesion = AceptarServicio(idservicio);
+            var aceptarServicio = ActualizarServicio(idservicio, coachcheckint);
 
             return RedirectToAction("Servicios", new { p = 0 });
         }
 
-        public string AceptarServicio(int idservicio)
+        public string ActualizarServicio(int idservicio, string coachcheckint)
         {
             string mensaje = "";
             var cadena = new Conexion();
@@ -376,9 +416,10 @@ namespace ProyectoIntegradorII.Controllers
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("USP_ACEPTAR_SERVICIO_PRUEBA", cn);
+                    SqlCommand cmd = new SqlCommand("USP_ACTUALIZAR_SERVICIO", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
+                    cmd.Parameters.AddWithValue("@COACHCHECKIN", coachcheckint);
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     mensaje = "Servicio Actualizado";
@@ -389,14 +430,47 @@ namespace ProyectoIntegradorII.Controllers
             return mensaje;
         }
 
-        public IActionResult ServicioRechazar(int idservicio)
+        public IActionResult ActualizarSesiones(int idsesion, int idservicio, string coachcheckint)
         {
-            var aceptarSesion = RechazarServicio(idservicio);
+            var aceptarSesion = ActualizarSesion(idsesion, idservicio, coachcheckint);
+
+            return RedirectToAction("Sesiones", new { p = 0 });
+        }
+
+        public string ActualizarSesion(int idsesion, int idservicio, string coachcheckint)
+        {
+            string mensaje = "";
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("USP_ACTUALIZAR_SESION", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_SESION", idsesion);
+                    cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
+                    cmd.Parameters.AddWithValue("@COACHCHECKIN", coachcheckint);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    mensaje = "Sesion Actualizado";
+                }
+                catch (Exception ex) { mensaje = ex.Message; }
+                finally { cn.Close(); }
+            }
+            return mensaje;
+        }
+
+        [HttpPost]
+        public IActionResult CalificarCoach(int id_servicio, int idNivelSatisfacion)
+        {
+
+            var calificar = CalificarServicio(id_servicio, idNivelSatisfacion);
 
             return RedirectToAction("Servicios", new { p = 0 });
         }
 
-        public string RechazarServicio(int idservicio)
+        public string CalificarServicio(int id_servicio, int idNivelSatisfacion)
         {
             string mensaje = "";
             var cadena = new Conexion();
@@ -405,70 +479,13 @@ namespace ProyectoIntegradorII.Controllers
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("USP_RECHAZAR_SERVICIO", cn);
+                    SqlCommand cmd = new SqlCommand("USP_CALIFICAR_SERVICIO_PRUEBA", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
+                    cmd.Parameters.AddWithValue("@ID_SERVICIO", id_servicio);
+                    cmd.Parameters.AddWithValue("@ID_NIVELSATISFACION", idNivelSatisfacion);
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     mensaje = "Servicio Actualizado";
-                }
-                catch (Exception ex) { mensaje = ex.Message; }
-                finally { cn.Close(); }
-            }
-            return mensaje;
-        }
-
-        public IActionResult SesionAceptar(int idservicio)
-        {
-            var aceptarSesion = AceptarSesion(idservicio);
-
-            return RedirectToAction("Sesiones", new { p = 0 });
-        }
-
-        public string AceptarSesion(int idservicio)
-        {
-            string mensaje = "";
-            var cadena = new Conexion();
-
-            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("USP_ACEPTAR_SERVICIO_SESION", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    mensaje = "Sesion Actualizado";
-                }
-                catch (Exception ex) { mensaje = ex.Message; }
-                finally { cn.Close(); }
-            }
-            return mensaje;
-        }
-
-        public IActionResult SesionRechazar(int idservicio)
-        {
-            var aceptarSesion = AceptarRechazar(idservicio);
-
-            return RedirectToAction("Sesiones", new { p = 0 });
-        }
-
-        public string AceptarRechazar(int idservicio)
-        {
-            string mensaje = "";
-            var cadena = new Conexion();
-
-            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("USP_RECHAZAR_SESION", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ID_SERVICIO", idservicio);
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    mensaje = "Sesion Actualizado";
                 }
                 catch (Exception ex) { mensaje = ex.Message; }
                 finally { cn.Close(); }
