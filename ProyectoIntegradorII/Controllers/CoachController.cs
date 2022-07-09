@@ -473,6 +473,28 @@ namespace ProyectoIntegradorII.Controllers
 
                     TempData["SuccessMessage"] = "Le hemos enviado su usuario y contraseña a su correo";
 
+                    string tiposes = "";
+                    string tiposer = "";
+
+                    if (reg.tipoSesion == 1)
+                    {
+                        tiposes = "Referencia Estrategica";
+                    }
+                    if (reg.tipoSesion == 2)
+                    {
+                        tiposes = "Coaching";
+                    }
+                    if (reg.tipoServicio == 1)
+                    {
+                        tiposer = "Individual";
+                    }
+                    if (reg.tipoServicio == 2)
+                    {
+                        tiposer = "Paquete";
+                    }
+
+                    ECoach regx = Buscar(reg.idCoach);
+
                     var cadena = new Conexion();
 
                     #region envio correo cliente
@@ -482,7 +504,16 @@ namespace ProyectoIntegradorII.Controllers
                     email.Subject = "Usuario y Contraseña";
                     email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                     {
-                        Text = "Tu Usuario es: " + responseClienteNuevo.nombreUsuario + " y tu Contraseña es: " + responseClienteNuevo.clave
+                        Text = "Estimado cliente, su usuario y contraseña son los siguientes:" + "<br/>" +
+                               "Usuario: " + responseClienteNuevo.nombreUsuario + "<br/>" +
+                               "Contraseña: " + responseClienteNuevo.clave + "<br/>" +
+                               "Detalles de la solicitud:" + "<br/>" +
+                               "Usted a solicitado los servicios del coach: " + regx.coach + "<br/>" +
+                               "Tipo de Sesion: " + tiposes + "<br/>" +
+                               "Tipo de Servicio: " + tiposer + "<br/>" +
+                               "Precio: " + reg.precio + "<br/>" +
+                               "Total de Horas por Sesiones: " + reg.cantidadHoras * reg.cantidadSesiones + "<br/>" +
+                               "Monto: " + reg.monto
                     };
                     using (var emailClient = new SmtpClient())
                     {
@@ -527,7 +558,13 @@ namespace ProyectoIntegradorII.Controllers
                     email2.Subject = "Solicitud de Servicio";
                     email2.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                     {
-                        Text = "El cliente " + responseClienteNuevo.nombresCompletos + " ha contratado sus servicios"
+                        Text = "El cliente " + responseClienteNuevo.nombresCompletos + " ha contratado sus servicios" + "<br/>" +
+                               "Detalle del Servicio: " + "<br/>" +
+                               "Tipo de Sesion: " + tiposes + "<br/>" +
+                               "Tipo de Servicio: " + tiposer + "<br/>" +
+                               "Precio: " + reg.precio + "<br/>" +
+                               "Total de Horas por Sesiones: " + reg.cantidadHoras * reg.cantidadSesiones + "<br/>" +
+                               "Monto: " + reg.monto
                     };
                     using (var emailClient2 = new SmtpClient())
                     {

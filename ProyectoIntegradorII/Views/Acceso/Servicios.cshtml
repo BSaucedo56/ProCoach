@@ -330,11 +330,11 @@
     </table>
 
     <div>
-        @Html.ActionLink("|<","Servicios","Acceso",new{p=0},new{@class="btn btn-primary"})
-        @Html.ActionLink("<<","Servicios","Acceso",new{p=(@ViewBag.p<=0 ? 0 : @ViewBag.p-1)},new{@class="btn btn-primary"})
+        @Html.ActionLink("|<","Servicios","Acceso",new{p=0},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
+        @Html.ActionLink("<<","Servicios","Acceso",new{p=(@ViewBag.p<=0 ? 0 : @ViewBag.p-1)},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
         <em>@ViewBag.etiqueta</em>
-        @Html.ActionLink(">>","Servicios","Acceso",new{p=(@ViewBag.p>=@ViewBag.npags-1 ? @ViewBag.npags-1 : @ViewBag.p+1)},new{@class="btn btn-primary"})
-        @Html.ActionLink(">|","Servicios","Acceso",new{p=@ViewBag.npags-1},new{@class="btn btn-primary"})
+        @Html.ActionLink(">>","Servicios","Acceso",new{p=(@ViewBag.p>=@ViewBag.npags-1 ? @ViewBag.npags-1 : @ViewBag.p+1)},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
+        @Html.ActionLink(">|","Servicios","Acceso",new{p=@ViewBag.npags-1},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
     </div>
   </div>
   </main>
