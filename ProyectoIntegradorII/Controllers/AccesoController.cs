@@ -311,6 +311,7 @@ namespace ProyectoIntegradorII.Controllers
             {
                 ViewBag.idservicio = infser.id_servicio;
                 ViewBag.idNivelSatisfacion = new SelectList(listaNivelSatisfacion(), "idNivelSatisfacion", "nivelSatisfacion", infser.idNivelSatisfacion);
+                ViewBag.niveldesatisfacion = infser.idNivelSatisfacion;
             }
 
             return View(temporal.Skip(p * f).Take(f));

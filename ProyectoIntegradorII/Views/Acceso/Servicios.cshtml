@@ -20,6 +20,17 @@
     }
 }
 
+@{
+    @if(ViewBag.niveldesatisfacion != 1004)
+    {
+        ViewBag.calificacion = "Calificación";
+    }
+    else
+    {
+        ViewBag.calificacion = "Califica al Coach";
+    }
+}
+
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -256,7 +267,7 @@
                         Estado
                     </th>
                     <th class="thcoach16" style="text-align: center; vertical-align: middle;">
-                        Califica al Coach
+                        @ViewBag.calificacion
                     </th>
                 }
                 @if (User.IsInRole("Coach"))
