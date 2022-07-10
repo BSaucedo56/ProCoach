@@ -5,37 +5,37 @@
     Layout = "~/Views/Shared/_LayoutCoach.cshtml";
 }
 
-<h1 class="hcoach">ENCONTRAR UN COACH</h1>
+<h1 class="hcoach" style="text-shadow: black 0.1em 0.1em 0.2em;">ENCONTRAR UN COACH</h1>
 
 @using(Html.BeginForm("EncontrarCoaches","Coach"))
 {
     @Html.AntiForgeryToken()
 
     <div id="encontrarcoachselect">
-        <h2 class="h2coach">Especialidad:</h2>
+        <h2 class="h2coach" style="text-shadow: black 0.1em 0.1em 0.2em;">Especialidad:</h2>
             <div class="Select1">
             @Html.DropDownList("e", null, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
-        <h2 class="h2coach2">Certificación ICF:</h2>
+        <h2 class="h2coach2" style="text-shadow: black 0.1em 0.1em 0.2em;">Certificación ICF:</h2>
             <div class="Select2">
             @Html.DropDownList("co", null, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
-        <h2 class="h2coach3">Metodo de Coaching:</h2>
+        <h2 class="h2coach3" style="text-shadow: black 0.1em 0.1em 0.2em;">Metodo de Coaching:</h2>
             <div class="Select3">
             @Html.DropDownList("m", null, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
         <br />
-        <h2 class="h2coach4">Idioma:</h2>
+        <h2 class="h2coach4" style="text-shadow: black 0.1em 0.1em 0.2em;">Idioma:</h2>
             <div class="Select4">
             @Html.DropDownList("i", null, new { @class = "p-1 ml-1 rounded-pill select-add-placeholder dropdown-toggle dropdown-toggle-split" })
             </div>
         <br />
-            <input type="submit" name="name" value="Buscar" class="botonBuscar" />
+            <input type="submit" name="name" value="Buscar" class="botonBuscar" style="text-shadow: black 0.1em 0.1em 0.2em;" />
     </div>
 }
 <br />
