@@ -343,6 +343,7 @@ namespace ProyectoIntegradorII.Controllers
                             precio = dr.GetDecimal(5),
                             correo = dr.GetString(6),
                             checkint = dr.GetString(7),
+                            comentario = dr.GetString(8),
                         };
                         temporal.Add(obj);
                     }
@@ -487,6 +488,154 @@ namespace ProyectoIntegradorII.Controllers
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     mensaje = "Servicio Actualizado";
+                }
+                catch (Exception ex) { mensaje = ex.Message; }
+                finally { cn.Close(); }
+            }
+            return mensaje;
+        }
+
+        IEnumerable<SesionInf> listarsesiones()
+        {
+            List<SesionInf> temporal = new List<SesionInf>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("exec USP_LISTAR_SESIONES", cn);
+                    cn.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        SesionInf obj = new SesionInf()
+                        {
+                            id_sesion = dr.GetInt32(0),
+                            id_servicio = dr.GetInt32(1),
+                            nombre_usuario = dr.GetString(2),
+                            nombresApellidos = dr.GetString(3),
+                            fechasesion = dr.GetDateTime(4),
+                            precio = dr.GetDecimal(5),
+                            correo = dr.GetString(6),
+                            checkint = dr.GetString(7),
+                            comentario = dr.GetString(8),
+                        };
+                        temporal.Add(obj);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+            return temporal;
+        }
+
+        IEnumerable<SesionInf> listarsesionesCoach()
+        {
+            List<SesionInf> temporal = new List<SesionInf>();
+
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL())) // ESTABLECE LA CONEXIÓN CON LA BD
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("exec USP_LISTAR_SESIONES_COACH", cn);
+                    cn.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        SesionInf obj = new SesionInf()
+                        {
+                            id_sesion = dr.GetInt32(0),
+                            id_servicio = dr.GetInt32(1),
+                            nombre_usuario = dr.GetString(2),
+                            nombresApellidos = dr.GetString(3),
+                            fechasesion = dr.GetDateTime(4),
+                            precio = dr.GetDecimal(5),
+                            correo = dr.GetString(6),
+                            checkint = dr.GetString(7),
+                            comentario = dr.GetString(8),
+                        };
+                        temporal.Add(obj);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+            return temporal;
+        }
+
+        SesionInf Buscar(int id)
+        {
+            return listarsesiones().Where(c => c.id_sesion == id).FirstOrDefault();
+        }
+
+        SesionInf BuscarSesionCoach(int id)
+        {
+            return listarsesionesCoach().Where(c => c.id_sesion == id).FirstOrDefault();
+        }
+
+        public IActionResult CoachVerComentario(int id)
+        {
+            SesionInf sesi = BuscarSesionCoach(id);
+            ViewBag.comentario = sesi.comentario;
+
+            return PartialView("_PartialCoachVerComentario");
+        }
+
+        public IActionResult VerDetalle(int id)
+        {
+            SesionInf sesi = Buscar(id);
+
+            ViewBag.coach = sesi.nombresApellidos;
+            ViewBag.fecha = sesi.fechasesion;
+            ViewBag.precio = sesi.precio;
+            ViewBag.estado = sesi.checkint;
+            ViewBag.idsesion = sesi.id_sesion;
+            ViewBag.idservicio = sesi.id_servicio;
+            ViewBag.comentario = sesi.comentario;
+
+            return PartialView("_PartialVerDetalleSesion");
+        }
+
+        public IActionResult ActualizarComentarios(SesionInf reg)
+        {
+            var aceptarSesion = ActualizarComentario(reg);
+
+            return RedirectToAction("Sesiones", new { p = 0 });
+        }
+
+        public string ActualizarComentario(SesionInf reg)
+        {
+            string mensaje = "";
+            var cadena = new Conexion();
+
+            using (var cn = new SqlConnection(cadena.getCadenaSQL()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("USP_ACTUALIZAR_COMENTARIO_SESION", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_SESION", reg.id_sesion);
+                    cmd.Parameters.AddWithValue("@ID_SERVICIO", reg.id_servicio);
+                    cmd.Parameters.AddWithValue("@COMENTARIO", reg.comentario);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    mensaje = "Sesion Actualizado";
                 }
                 catch (Exception ex) { mensaje = ex.Message; }
                 finally { cn.Close(); }

@@ -501,19 +501,35 @@ namespace ProyectoIntegradorII.Controllers
                     var email = new MimeMessage();
                     email.From.Add(MailboxAddress.Parse("alerta.coach@inteligencia369.com"));
                     email.To.Add(MailboxAddress.Parse(reg.correo));
-                    email.Subject = "Usuario y Contraseña";
+                    email.Subject = "Portal Alerta Coach: Usuario y Contraseña";
                     email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                     {
-                        Text = "Estimado cliente, su usuario y contraseña son los siguientes:" + "<br/>" +
+                        Text = "Estimado cliente "+ responseClienteNuevo.nombresCompletos + "," + 
+                               "<br/>" + 
+                               "<br/>" +
+                               "Se ha creado su perfil para la web Alerta Coach. Se detalla a continuación sus credenciales de acceso:" + 
+                               "<br/>" +
+                               "<br/>" +
                                "Usuario: " + responseClienteNuevo.nombreUsuario + "<br/>" +
-                               "Contraseña: " + responseClienteNuevo.clave + "<br/>" +
-                               "Detalles de la solicitud:" + "<br/>" +
-                               "Usted a solicitado los servicios del coach: " + regx.coach + "<br/>" +
-                               "Tipo de Sesion: " + tiposes + "<br/>" +
+                               "Contraseña: " + responseClienteNuevo.clave + 
+                               "<br/>" +
+                               "<br/>" +
+                               "Detalles de la solicitud:" + 
+                               "<br/>" + 
+                               "<br/>" +
+                               "Usted ha solicitado los servicios del coach: " + regx.coach + "<br/>" +
+                               "Tipo de Sesión: " + tiposes + "<br/>" +
                                "Tipo de Servicio: " + tiposer + "<br/>" +
-                               "Precio: " + reg.precio + "<br/>" +
+                               "Precio: " + "S/ " + reg.precio + "<br/>" +
                                "Total de Horas por Sesiones: " + reg.cantidadHoras * reg.cantidadSesiones + "<br/>" +
-                               "Monto: " + reg.monto
+                               "Monto: " + "S/ " + reg.monto + 
+                               "<br/>" + 
+                               "<br/>" +
+                               "Si tiene más preguntas, contactarnos por medio de este correo." +
+                               "<br/>" +
+                               "<br/>" +
+                               "Gracias," + "<br/>" +
+                               "Equipo de Alerta Coach"
                     };
                     using (var emailClient = new SmtpClient())
                     {
@@ -555,16 +571,29 @@ namespace ProyectoIntegradorII.Controllers
                     var email2 = new MimeMessage();
                     email2.From.Add(MailboxAddress.Parse("alerta.coach@inteligencia369.com"));
                     email2.To.Add(MailboxAddress.Parse(correoCoach));
-                    email2.Subject = "Solicitud de Servicio";
+                    email2.Subject = "Portal Alerta Coach: Solicitud de Servicio";
                     email2.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                     {
-                        Text = "El cliente " + responseClienteNuevo.nombresCompletos + " ha contratado sus servicios" + "<br/>" +
+                        Text = "Estimado Coach," + 
+                               "<br/>" + 
+                               "<br/>" +
+                               "El cliente " + responseClienteNuevo.nombresCompletos + " ha contratado sus servicios" + 
+                               "<br/>" +
+                               "<br/>" +
                                "Detalle del Servicio: " + "<br/>" +
-                               "Tipo de Sesion: " + tiposes + "<br/>" +
+                               "Tipo de Sesión: " + tiposes + "<br/>" +
                                "Tipo de Servicio: " + tiposer + "<br/>" +
-                               "Precio: " + reg.precio + "<br/>" +
+                               "Precio: " + "S/ " + reg.precio + "<br/>" +
                                "Total de Horas por Sesiones: " + reg.cantidadHoras * reg.cantidadSesiones + "<br/>" +
-                               "Monto: " + reg.monto
+                               "Monto: " + "S/ " + reg.monto + 
+                               "<br/>" +
+                               "<br/>" +
+                               "Si desea aceptar el servicio diríjase a su cuenta respectiva y confírmelo." +
+                               "<br/>" +
+                               "<br/>" +
+                               "Gracias," + "<br/>" +
+                               "Equipo de Alerta Coach"
+
                     };
                     using (var emailClient2 = new SmtpClient())
                     {

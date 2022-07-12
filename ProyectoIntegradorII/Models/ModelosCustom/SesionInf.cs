@@ -10,5 +10,6 @@
         public decimal precio { get; set; }
         public string correo { get; set; }
         public string checkint { get; set; }
+        public string comentario { get; set; }
     }
 }

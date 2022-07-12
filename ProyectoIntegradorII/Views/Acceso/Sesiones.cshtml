@@ -224,7 +224,6 @@
     </a>
     </div>*@
   </nav>
-
   <main style="margin-left: 260px;">
       <h1 style="color: white; margin: 30px; font-family: lemon; text-align: center; text-shadow: black 0.1em 0.1em 0.2em; -webkit-text-stroke: 2px black;">Sesiones</h1>
       <div style="color: black; margin: -30px; font-family: lemon; text-align: center; width: 110%; margin-top: 30px;">
@@ -249,11 +248,17 @@
                 <th class="thcoach13" style="text-align: center; vertical-align: middle;">
                     Enlace Zoom
                 </th>
+                <th class="thcoach13" style="text-align: center; vertical-align: middle;">
+                    Comentario
+                </th>
                 }
                 @if (User.IsInRole("Cliente"))
                 {
                 <th class="thcoach13" style="text-align: center; vertical-align: middle;">
                     Estado
+                </th>
+                <th class="thcoach13" style="text-align: center; vertical-align: middle;">
+                    Detalle
                 </th>
                 <th class="thcoach13" style="text-align: center; vertical-align: middle;">
                     Enlace Zoom
@@ -281,6 +286,8 @@
                                 <td class="thcoach24" style="text-align: center; vertical-align: middle;">
                                     <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Pendiente</strong></p>
                                 </td>
+                                <td></td>
+                                <td></td>
                         break;
                     }
                 }
@@ -335,6 +342,10 @@
                     switch (item.checkint)
                         {
                             case "Aceptado":
+                                <td>
+                                    <div id="PlaceHolderHere"></div>
+                                    <button style="margin-top: 7px; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVerDetalle" data-url="@Url.Action($"VerDetalle/{item.id_sesion}")">Ver Detalle</button>
+                                </td>
                                 <td style="text-align: center; vertical-align: middle;">
                                     <a href="https://zoom.us/" target="_blank"><img src="~/imagenes/zoom.png" width="50" height="50"></a>
                                 </td>
@@ -348,6 +359,10 @@
                             case "Aceptado":
                                 <td style="text-align: center; vertical-align: middle;">
                                     <a href="https://zoom.us/" target="_blank"><img src="~/imagenes/zoom.png" width="50" height="50"></a>
+                                </td>
+                                <td class="thcoach22" style="text-align: center; vertical-align: middle;">
+                                    <div id="PlaceHolderHere"></div>
+                                    <button style="margin-top: 7px; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVerComentario" data-url="@Url.Action($"CoachVerComentario/{item.id_sesion}")">Ver</button>
                                 </td>
                             break;
                         }
