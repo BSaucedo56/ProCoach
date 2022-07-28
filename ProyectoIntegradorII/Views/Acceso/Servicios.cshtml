@@ -291,7 +291,7 @@
                     @Html.DisplayFor(modelItem => item.tiposervicio)
                 </td >
                 <td class="thcoach23" style="text-align: center; vertical-align: middle;">
-                    @Html.DisplayFor(modelItem => item.precio)
+                    USD @Html.DisplayFor(modelItem => item.precio)
                 </td>
                 <td class="thcoach24" style="text-align: center; vertical-align: middle;">
                     @Html.DisplayFor(modelItem => item.cantsesiones)
@@ -306,9 +306,22 @@
                 {
                     switch (item.checkint)
                     {
+                        case "Aceptado":
+                            <td class="thcoach24" style="text-align: center; vertical-align: middle;">
+                                <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 #008000, 2px -2px 0 #008000, -2px 2px 0 #008000, -2px -2px 0 #008000, 2px 0px 0 #008000, 0px 2px 0 #008000, -2px 0px 0 #008000, 0px -2px 0 #008000;"><strong>Aceptado</strong></p>
+                            </td>
+                        break;
+                        case "Cancelado":
+                            <td class="thcoach24" style="text-align: center; vertical-align: middle;">
+                                <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 red, 2px -2px 0 red, -2px 2px 0 red, -2px -2px 0 red, 2px 0px 0 red, 0px 2px 0 red, -2px 0px 0 red, 0px -2px 0 red;"><strong>Cancelado</strong></p>
+                            </td>
+                        break;
                         case "Pendiente":
                             <td class="thcoach24" style="text-align: center; vertical-align: middle;">
                                 <p style="margin-top: 15px; color: white; text-shadow: 2px 2px 0 #3358FF, 2px -2px 0 #3358FF, -2px 2px 0 #3358FF, -2px -2px 0 #3358FF, 2px 0px 0 #3358FF, 0px 2px 0 #3358FF, -2px 0px 0 #3358FF, 0px -2px 0 #3358FF;"><strong>Pendiente</strong></p>
+                            </td>
+                            <td>
+
                             </td>
                         break;
                     }
@@ -325,7 +338,7 @@
                         break;
                     }
                 }
-                @if (User.IsInRole("Coach") || User.IsInRole("Cliente"))
+                @if (User.IsInRole("Coach"))
                 {
                     switch (item.checkint)
                     {
@@ -343,29 +356,38 @@
                 }
                 @if (User.IsInRole("Cliente"))
                 {
-                    switch (item.nivelSatisfacion)
-                    {
-                        case "Ninguno":
-                            <td>
-                                @using(Html.BeginForm("CalificarCoach","Acceso"))
-                                {
-                                    @Html.AntiForgeryToken()
+                    switch (item.checkint){
+                        case "Aceptado":
+                            switch (item.nivelSatisfacion)
+                            {
+                                case "Ninguno":
+                                    <td>
+                                        @using(Html.BeginForm("CalificarCoach","Acceso"))
+                                        {
+                                            @Html.AntiForgeryToken()
 
-                                    <div>
-                                        <div style="visibility: hidden">
-                                            @Html.TextBox("id_servicio", @item.id_servicio)
-                                        </div>
-                                        <div style="margin-top: -30px; margin-bottom: 10px; font-size: 12px;">
-                                            @Html.DropDownList("idNivelSatisfacion", (IEnumerable<SelectListItem>)ViewBag.idNivelSatisfacion, new { @class = "p-1 ml-1 rounded-pill select-add-placeholderServicio dropdown-toggle dropdown-toggle-split" })
-                                        </div>
-                                            <input style="font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" type="submit" name="name" value="Calificar" class="btn btn-primary" />
-                                    </div>
-                                }
-                            </td>
-                        break;
-                        default:
+                                            <div>
+                                                <div style="visibility: hidden">
+                                                    @Html.TextBox("id_servicio", @item.id_servicio)
+                                                </div>
+                                                <div style="margin-top: -30px; margin-bottom: 10px; font-size: 12px;">
+                                                    @Html.DropDownList("idNivelSatisfacion", (IEnumerable<SelectListItem>)ViewBag.idNivelSatisfacion, new { @class = "p-1 ml-1 rounded-pill select-add-placeholderServicio dropdown-toggle dropdown-toggle-split" })
+                                                </div>
+                                                    <input style="font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;" type="submit" name="name" value="Calificar" class="btn btn-primary" />
+                                            </div>
+                                        }
+                                    </td>
+                                break;
+                                default:
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <p style="text-shadow: gray 0.1em 0.1em 0.2em; margin-top: 15px; color: @item.color"><strong>@item.nivelSatisfacion</strong></p>
+                                    </td>
+                                break;
+                            }
+                            break;
+                        case "Cancelado":
                             <td style="text-align: center; vertical-align: middle;">
-                                <p style="text-shadow: gray 0.1em 0.1em 0.2em; margin-top: 15px; color: @item.color"><strong>@item.nivelSatisfacion</strong></p>
+                                <p style="text-shadow: gray 0.1em 0.1em 0.2em; margin-top: 15px; color: @item.color"></p>
                             </td>
                         break;
                     }
@@ -390,14 +412,20 @@
     }
         </tbody>
     </table>
-
-    <div>
-        @Html.ActionLink("|<","Servicios","Acceso",new{p=0},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
-        @Html.ActionLink("<<","Servicios","Acceso",new{p=(@ViewBag.p<=0 ? 0 : @ViewBag.p-1)},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
-        <em>@ViewBag.etiqueta</em>
-        @Html.ActionLink(">>","Servicios","Acceso",new{p=(@ViewBag.p>=@ViewBag.npags-1 ? @ViewBag.npags-1 : @ViewBag.p+1)},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
-        @Html.ActionLink(">|","Servicios","Acceso",new{p=@ViewBag.npags-1},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
-    </div>
+    @if (ViewBag.contar != 0)
+    {
+        <div>
+            @Html.ActionLink("|<","Servicios","Acceso",new{p=0},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
+            @Html.ActionLink("<<","Servicios","Acceso",new{p=(@ViewBag.p<=0 ? 0 : @ViewBag.p-1)},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
+            <em>@ViewBag.etiqueta</em>
+            @Html.ActionLink(">>","Servicios","Acceso",new{p=(@ViewBag.p>=@ViewBag.npags-1 ? @ViewBag.npags-1 : @ViewBag.p+1)},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
+            @Html.ActionLink(">|","Servicios","Acceso",new{p=@ViewBag.npags-1},new{@class="btn btn-primary", @style="text-shadow: black 0.1em 0.1em 0.2em;"})
+        </div>
+    }
+    @if(ViewBag.contar == 0)
+    {
+        <label>No hay servicios asignados</label>               
+    }
   </div>
   </main>
   <!-- sidebar-wrapper  -->

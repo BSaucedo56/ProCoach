@@ -75,6 +75,21 @@
         {
             Text = "5",
             Value = "5"
+        },
+        new SelectListItem()
+        {
+            Text = "6",
+            Value = "6"
+        },
+        new SelectListItem()
+        {
+            Text = "7",
+            Value = "7"
+        },
+        new SelectListItem()
+        {
+            Text = "8",
+            Value = "8"
         }
     };
     var listado4 = new List<SelectListItem>()
@@ -138,7 +153,7 @@
         <br />
         <h2 class="h2modalprecio">Precio:</h2>
             <div class="modalpreciodes">
-            @Html.TextBox("pre", (decimal)ViewBag.precio , new { @readonly="readonly", @class ="p-1 ml-1 rounded" })
+            USD @Html.TextBox("pre", (decimal)ViewBag.precio , new { @readonly="readonly", @class ="p-1 ml-1 rounded" })
             </div>
         <br />
         <br />
@@ -156,7 +171,7 @@
         <br />
         <h2 class="h2modalcoachmonto">Monto:</h2>
             <div class="modalcoachmontodes">
-            @Html.TextBox("mon", null , new { @readonly="readonly", type="number", @class ="p-1 ml-1 rounded" })
+            USD @Html.TextBox("mon", null , new { @readonly="readonly", type="number", @class ="p-1 ml-1 rounded" })
             </div>
         <br />
         <br />

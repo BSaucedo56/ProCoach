@@ -303,6 +303,8 @@ namespace ProyectoIntegradorII.Controllers
             ViewBag.npags = npags;
             ViewBag.etiqueta = string.Concat((p + 1), " de ", npags);
 
+            ViewBag.contar = temporal.Count();
+
             ServicioInf nuevo = new ServicioInf();
             nuevo.nombre_usuario = inf.nombre_usuario;
             var infser = servicios(nuevo.nombre_usuario).Where(c => c.nombre_usuario == nuevo.nombre_usuario).FirstOrDefault();
@@ -391,6 +393,8 @@ namespace ProyectoIntegradorII.Controllers
             ViewBag.p = p;
             ViewBag.npags = npags;
             ViewBag.etiqueta = string.Concat((p + 1), " de ", npags);
+
+            ViewBag.contar = temporal.Count();
 
             return View(temporal.Skip(p * f).Take(f));
         }

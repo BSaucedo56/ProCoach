@@ -55,3 +55,13 @@
     position: fixed;
     top: 0;
 }
+
+.modalingresardatosregresar {
+    padding-left: 25px;
+    padding-right: 30px;
+}
+
+.modalingresardatosregresar:hover {
+    padding-left: 25px;
+    padding-right: 30px;
+}

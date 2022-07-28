@@ -25,9 +25,9 @@
       <td>@ViewBag.coach</td>
       <td>@ViewBag.sesion</td>
       <td>@ViewBag.servicio</td>
-      <td>S/. @Html.DisplayFor(model => model.precio)</td>
+      <td>USD @Html.DisplayFor(model => model.precio)</td>
       <td>@ViewBag.totalseshor</td>
-      <td>S/. @Html.DisplayFor(model => model.monto)</td>
+      <td>USD @Html.DisplayFor(model => model.monto)</td>
     </tr>
   </tbody>
 </table>
@@ -79,8 +79,8 @@
             </div>
         <div  style="padding-right: 100px; margin-left: -200px;">
           <label class="control-label is-required" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">Nombres</label>
-          <input asp-for="nombres" type="text" style="width: 400px;" class="form-control form-control-sm" name="nombres" value="" placeholder="Ingrese sus nombres">
-          <span asp-validation-for="nombres" class="text-danger" style="font-size: 11px; margin-bottom:-5px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;"></span>
+          <input id="nombres" asp-for="nombres" type="text" style="width: 400px;" class="form-control form-control-sm" name="nombres" value="" placeholder="Ingrese sus nombres">
+          <span id="nombres" asp-validation-for="nombres" class="text-danger" style="font-size: 11px; margin-bottom:-5px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;"></span>
           @*<p class="formulario__input-error" style="font-size: 11px; margin-bottom:-5px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;">El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.</p>*@
         </div>
         <div  style="padding-right: 70px;">
@@ -106,26 +106,26 @@
       </div>
       <div class="form-row">
         <div  style="padding-right: 100px; margin-left: -200px; margin-top: 20px;">
-          <label class="control-label" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">Correo</label>
+          <label class="control-label is-required" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">Correo</label>
           <input asp-for="correo" type="email" style="width: 400px;" class="form-control form-control-sm" name="correo" value="" placeholder="Ingrese su correo">
           <span asp-validation-for="correo" class="text-danger" style="font-size: 11px; margin-bottom:-5px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;"></span>
           @*<p class="formulario__input-error" style="font-size: 11px; margin-bottom:-5px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;">El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.</p>*@
         </div>
         <div  style="padding-right: 70px; margin-top: 20px;">
-          <label class="control-label" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">Tipo Documento</label>
+          <label class="control-label is-required" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">Tipo Documento</label>
           <select asp-for="tipoDocumento" asp-items="@ViewBag.tipodocumentos" class="form-select p-1 px-2 select-add-placeholder dropdown-toggle dropdown-toggle-split" style="font-size: 14px; width: 200px;"></select>
           <span asp-validation-for="tipoDocumento" class="text-danger" style="font-size: 11px; margin-bottom:-5px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;"></span>
         </div>
       </div>
       <div class="form-row">
         <div  style="padding-right: 100px; margin-left: -200px; margin-top: 20px; margin-bottom: -30px;">
-          <label class="control-label" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">Número Documento</label>
+          <label class="control-label is-required" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">Número Documento</label>
           <input asp-for="numDocumento" type="text" style="width: 250px; margin-right: 150px;" class="form-control form-control-sm" name="numDocumento" value="" placeholder="Ingrese su número de documento">
           <span asp-validation-for="numDocumento" class="text-danger" style="font-size: 11px; margin-bottom:-15px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;"></span>
           @*<p class="formulario__input-error" style="font-size: 11px; margin-bottom:-30px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;">El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.</p>*@
         </div>
         <div  style="padding-right: 70px; margin-top: 20px;">
-          <label class="control-label" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">País</label>
+          <label class="control-label is-required" style="font-family: lemon; color: white; font-size: 14px; text-shadow: black 0.1em 0.1em 0.2em;">País</label>
           <select asp-for="pais" asp-items="@ViewBag.paises" class="form-select p-1 px-2 select-add-placeholder dropdown-toggle dropdown-toggle-split" style="font-size: 14px; width: 200px;"></select>
           <span asp-validation-for="pais" class="text-danger" style="font-size: 11px; margin-bottom:-5px; margin-top:5px; font-family: lemon; color: red; text-shadow: 0 0 3px #000000;"></span>
         </div>
@@ -133,8 +133,9 @@
       <br />
       <div class="form-footer">
           <div style="padding-left: 78px; padding-top: 15px">
-            <input type="submit" value="Registrar" class="modalingresardatos" style="margin-right: 40px; text-shadow: black 0.1em 0.1em 0.2em;"/>
-            <input style="text-shadow: black 0.1em 0.1em 0.2em;" type="button" value="Regresar" class="modalingresardatosregresar" onclick="location.href='@Url.Action("EncontrarCoach", "Coach")'" />
+            <input type="submit" value="Registrar" class="modalingresardatos" style="margin-left: -70px; margin-right: 40px; text-shadow: black 0.1em 0.1em 0.2em;"/>
+            <input type="button" value="Limpiar" style="text-shadow: black 0.1em 0.1em 0.2em; margin-right: 40px;" class="modalingresardatosregresar" onclick="limpiar()" />
+            <input style="text-shadow: black 0.1em 0.1em 0.2em;" type="button" value="Salir" class="modalingresardatosregresar" onclick="alerta()" />
           </div>
       </div>
     </form>
@@ -158,6 +159,31 @@
                 console.log("invalid");
             }
         });
+
+        function limpiar() {
+            document.getElementById('nombres').value = '';
+            document.getElementById('apellidos').value = '';
+            document.getElementById('direccion').value = '';
+            document.getElementById('telefono').value = '';
+            document.getElementById('correo').value = '';
+            document.getElementById('tipoDocumento').value = '';
+            document.getElementById('numDocumento').value = '';
+            document.getElementById('pais').value = '';            
+        }   
+
+        function alerta()
+        {
+            var mensaje;
+            var opcion = confirm("Al salir se perderán todos los datos llenados");
+            if (opcion == true) {
+                window.location.href = '@Url.Action("EncontrarCoach", "Coach")';
+                
+	        } else {
+	            mensaje = "Has clickado Cancelar";
+	        }
+	        document.getElementById("ejemplo").innerHTML = mensaje;
+        }
+
     </script>
 }
 

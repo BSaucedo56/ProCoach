@@ -520,9 +520,9 @@ namespace ProyectoIntegradorII.Controllers
                                "Usted ha solicitado los servicios del coach: " + regx.coach + "<br/>" +
                                "Tipo de Sesión: " + tiposes + "<br/>" +
                                "Tipo de Servicio: " + tiposer + "<br/>" +
-                               "Precio: " + "S/ " + reg.precio + "<br/>" +
+                               "Precio: " + "USD " + reg.precio + "<br/>" +
                                "Total de Horas por Sesiones: " + reg.cantidadHoras * reg.cantidadSesiones + "<br/>" +
-                               "Monto: " + "S/ " + reg.monto + 
+                               "Monto: " + "USD " + reg.monto + 
                                "<br/>" + 
                                "<br/>" +
                                "Si tiene más preguntas, contactarnos por medio de este correo." +
@@ -583,9 +583,9 @@ namespace ProyectoIntegradorII.Controllers
                                "Detalle del Servicio: " + "<br/>" +
                                "Tipo de Sesión: " + tiposes + "<br/>" +
                                "Tipo de Servicio: " + tiposer + "<br/>" +
-                               "Precio: " + "S/ " + reg.precio + "<br/>" +
+                               "Precio: " + "USD " + reg.precio + "<br/>" +
                                "Total de Horas por Sesiones: " + reg.cantidadHoras * reg.cantidadSesiones + "<br/>" +
-                               "Monto: " + "S/ " + reg.monto + 
+                               "Monto: " + "USD " + reg.monto + 
                                "<br/>" +
                                "<br/>" +
                                "Si desea aceptar el servicio diríjase a su cuenta respectiva y confírmelo." +
@@ -650,8 +650,8 @@ namespace ProyectoIntegradorII.Controllers
                     cmd.Parameters.AddWithValue("@MONTO", reg.monto);
                     cmd.Parameters.AddWithValue("@NOMBRES", reg.nombres);
                     cmd.Parameters.AddWithValue("@APELLIDOS", reg.apellidos);
-                    cmd.Parameters.AddWithValue("@DIRECCION", reg.direccion);
-                    cmd.Parameters.AddWithValue("@TELEFONO", reg.telefono);
+                    cmd.Parameters.AddWithValue("@DIRECCION", (reg.direccion) ?? "");
+                    cmd.Parameters.AddWithValue("@TELEFONO", (reg.telefono) ?? "");
                     cmd.Parameters.AddWithValue("@CORREO", reg.correo);
                     cmd.Parameters.AddWithValue("@TIPODOCUMENTO", reg.tipoDocumento);
                     cmd.Parameters.AddWithValue("@NUMDOCUMENTO", reg.numDocumento);
