@@ -74,9 +74,9 @@
                 </button>
             </td>
             <td>
-                <button style="text-shadow: black 0.1em 0.1em 0.2em;" type="button" class="solicoach" data-bs-toggle="modal" data-bs-target="#modalSolicitarCoach" data-url="@Url.Action($"SoliCoach/{item.idCoach}")">
-                    Solicitar
-                </button>
+                <div style="margin-top: 5px;">
+                    <a class="botonsolicitar" href="@Url.Action("Solicitar", "Coach", new {id=item.idCoach})">Solicitar</a>
+                </div>
             </td>
         </tr>
 }

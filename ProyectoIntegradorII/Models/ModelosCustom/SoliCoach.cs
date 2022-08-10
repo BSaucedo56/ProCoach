@@ -4,13 +4,13 @@ namespace ProyectoIntegradorII.Models.ModelosCustom
 {
     public class SoliCoach
     {
-        public int idCoach { get; set; }
-        public int tipoSesion { get; set; }
-        public int tipoServicio { get; set; }
-        public decimal precio { get; set; }
-        public int cantidadSesiones { get; set; }
-        public int cantidadHoras { get; set; }
-        public decimal monto { get; set; }
+        [Required] public int idCoach { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un tipo de sesión")] public int tipoSesion { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un tipo de servicio")] public int tipoServicio { get; set; }
+        [Required] public decimal precio { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar la cantidad de sesiones")] public int cantidadSesiones { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar la cantidad de horas")] public int cantidadHoras { get; set; }
+        [Required(ErrorMessage = "El monto no debe estar vacio")] public decimal monto { get; set; }
         [Required(ErrorMessage = "El campo Nombres no debe estar vacio")][StringLength(50)] public string nombres { get; set; }
         [Required(ErrorMessage = "El campo Apellidos no debe estar vacio")][StringLength(50)] public string apellidos { get; set; }
         [StringLength(50)] public string? direccion { get; set; }

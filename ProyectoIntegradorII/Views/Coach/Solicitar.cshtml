@@ -1,0 +1,307 @@
+﻿@using ProyectoIntegradorII.Models.ModelosCustom
+@model ProyectoIntegradorII.Models.ModelosCustom.SoliCoach
+
+@{
+    ViewData["Title"] = "Solicitar";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+@{
+    var listado = new List<SelectListItem>()
+    {
+        new SelectListItem()
+        {
+            Text = "Seleccione una opción",
+            Value = "-1",
+            Selected = true,
+            Disabled = true
+        },
+        new SelectListItem()
+        {
+            Text = "Referencia Estrategica",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "Coaching",
+            Value = "2"
+        }
+    };
+    var listado2 = new List<SelectListItem>()
+    {
+        new SelectListItem()
+        {
+            Text = "Seleccione una opción",
+            Value = "-1",
+            Selected = true,
+            Disabled = true
+        },
+        new SelectListItem()
+        {
+            Text = "Individual",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "Paquete",
+            Value = "2"
+        }
+    };
+    var listado3 = new List<SelectListItem>()
+    {
+        new SelectListItem()
+        {
+            Text = "Seleccione una opción",
+            Value = "-1",
+            Selected = true,
+            Disabled = true
+        },
+        new SelectListItem()
+        {
+            Text = "1",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "2",
+            Value = "2"
+        },
+        new SelectListItem()
+        {
+            Text = "3",
+            Value = "3"
+        },
+        new SelectListItem()
+        {
+            Text = "4",
+            Value = "4"
+        },
+        new SelectListItem()
+        {
+            Text = "5",
+            Value = "5"
+        },
+        new SelectListItem()
+        {
+            Text = "6",
+            Value = "6"
+        },
+        new SelectListItem()
+        {
+            Text = "7",
+            Value = "7"
+        },
+        new SelectListItem()
+        {
+            Text = "8",
+            Value = "8"
+        }
+    };
+    var listado4 = new List<SelectListItem>()
+    {
+        new SelectListItem()
+        {
+            Text = "Seleccione una opción",
+            Value = "-1",
+            Selected = true,
+            Disabled = true
+        },
+        new SelectListItem()
+        {
+            Text = "1",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "2",
+            Value = "2"
+        },
+        new SelectListItem()
+        {
+            Text = "3",
+            Value = "3"
+        }
+    }; 
+}
+
+<br />
+<h5 style="text-shadow: black 0.1em 0.1em 0.2em;" class="modaltituloinsert">SOLICITAR COACH</h5>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Registrar" id="myform" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div id="solicitarC" style="background-color: rgba(0,0,0,0.7); border-radius: 2em; margin-right: -605px; margin-left: 285px; padding-left: 160px; padding-right: 200px;">
+                <br />
+            <div class="form-group" style="margin-bottom: 30px; margin-top: 15px;">
+                <h2 class="h2modalcoach" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">Coach:</h2>
+                <h2 class="h2modalcoachnombre" asp-for="coach" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">@ViewBag.coach</h2>
+            </div>
+                <br />
+            <div class="form-group">
+                <input asp-for="idCoach" value="@ViewBag.idcoach" type="hidden" class="form-control p-1 ml-1 text-center" />
+            </div>
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label class="h2modalcoachsesion is-required" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">Tipo de Sesión: </label>
+                <select asp-for="tipoSesion" asp-items="listado" id="ses" class="form-select p-1 ml-1 text-center rounded-pill" style="width: 255px; margin-top: -29px; margin-left: 170px;"></select>
+                <span asp-validation-for="tipoSesion" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label class="h2modalcoachservicio is-required" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">Tipo de Servicio: </label>
+                <select asp-for="tipoServicio" asp-items="listado2" id="ser" class="form-select p-1 ml-1 text-center rounded-pill" style="width: 255px; margin-top: -29px; margin-left: 170px;"></select>
+                <span asp-validation-for="tipoServicio" id="valiser" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-bottom: 30px; margin-top: -15px;">
+                <h2 class="h2modalprecio" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">Precio: </h2>
+                <label class="control-label" style="color: white; font-size: 16px; font-weight: bold;">USD @ViewBag.precio</label>
+                <input asp-for="precio" id="pre" value="@ViewBag.precio" readonly="readonly" type="hidden" class="form-control p-1 ml-1 text-center"/>
+                <span asp-validation-for="precio" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-bottom: 30px; margin-top: -10px;">
+                <label class="h2modalcantsesiones is-required" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">Cantidad de Sesiones: </label>
+                <select asp-for="cantidadSesiones" asp-items="listado3" id="tamano" class="form-select p-1 ml-1 text-center rounded-pill" style="width: 255px; margin-top: -29px; margin-left: 170px;"></select>
+                <span asp-validation-for="cantidadSesiones" id="valicantses" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label class="h2modalcanthoras is-required" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">Cantidad de Horas: </label>
+                <select asp-for="cantidadHoras" asp-items="listado4" id="masa" class="form-select p-1 ml-1 text-center rounded-pill" style="width: 255px; margin-top: -29px; margin-left: 170px;"></select>
+                <span asp-validation-for="cantidadHoras" id="valicanthor" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-bottom: 30px;">
+                <h2 class="h2modalcoachmonto" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">Monto: USD </h2>
+                @*<span id="total" class="control-label" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;"></span>*@
+                @*<label class="control-label" style="font-family: lemon; color: white; text-shadow: black 0.1em 0.1em 0.2em;">USD 243</label>*@
+                <br />
+                <input asp-for="monto" id="total" readonly="readonly" type="number" class="form-control p-1 ml-1 text-center" style="width: 80px; margin-top: -29px; margin-left: 235px;"/>
+                <span asp-validation-for="monto" id="valimon" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="padding-bottom: 30px; margin-left: 5px;">
+                <input type="button" value="Salir" style="margin-left: 80px; margin-top: -60px; padding-left: 25px; padding-right: 25px;" class="btnSalir" onclick="alerta()"/>
+                <input type="submit" value="Siguiente" style="margin-left: 44px;" class="btnSiguiente" id="boton01"/>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    $(document).change(function () {
+                
+        if (document.getElementById('ses').value == "1") {
+            $("#ser").val(1);
+            document.getElementById("ser").disabled = true;
+            document.getElementById("valiser").style.visibility = "hidden";
+            $("#tamano").val(1);
+            document.getElementById("tamano").disabled = true;
+            $("#masa").val(1);
+            document.getElementById("masa").disabled = true;
+            
+        }
+        if (document.getElementById('ses').value == "2" && document.getElementById('ser').value == "1") {
+            document.getElementById("ser").disabled = false;
+            $("#tamano").val(1);
+            document.getElementById("tamano").disabled = true;
+            $("#masa").val(1);
+            document.getElementById("masa").disabled = true;
+            
+        }
+        if (document.getElementById('ses').value == "2" && document.getElementById('ser').value == "2") {
+            document.getElementById("tamano").disabled = false;
+            document.getElementById("masa").disabled = false;
+            
+        }
+    });
+</script>
+<script>
+
+    $(document).change(function () {
+
+        if (document.getElementById('ser').value == "1") {
+            $("#tamano").val(1);
+            document.getElementById("tamano").disabled = true;
+            $("#masa").val(1);
+            document.getElementById("masa").disabled = true;
+            document.getElementById("valicantses").style.visibility = "hidden";
+            document.getElementById("valicanthor").style.visibility = "hidden";
+            document.getElementById("valimon").style.visibility = "hidden";
+        }
+        if (document.getElementById('ser').value == "2") {
+            document.getElementById("tamano").disabled = false;
+            document.getElementById("masa").disabled = false;
+            document.getElementById("valimon").style.visibility = "hidden";
+        }
+    });    
+
+</script>
+<script>
+
+    $(document).change(function(event){
+
+      //Capturo el valor de cantSesiones,cantHoras y precio
+      cantSesiones = $('#tamano').val();
+      cantHoras = $('#masa').val();
+      precio = document.getElementById("pre").value;
+
+      //Compruebo si alguno de los tres está vacío
+      if(cantSesiones == "" || cantHoras == "" || precio == ""){
+
+        //A la variable resultado le asigno el valor 0
+        var resultado = 0;
+
+      }else{
+
+        //Si los tres ya tienen valor, hago operacion de los tres valores
+        var resultado = parseInt(precio) * parseInt(cantSesiones) * parseInt(cantHoras);
+
+      }
+
+      //Muestro el resultado
+        //document.getElementById("total").value = resultado;
+        $('#total').val(resultado);
+    });  
+
+</script>
+<script>
+
+    function alerta()
+    {
+        var mensaje;
+        var opcion = confirm("Al salir tendrá que volver a solicitar un coach");
+        if (opcion == true) {
+            window.location.href = '@Url.Action("EncontrarCoach", "Coach")';
+                
+	    } else {
+	        mensaje = "Has clickado Cancelar";
+	    }
+	    document.getElementById("ejemplo").innerHTML = mensaje;
+    }
+
+</script>
+<script>
+    $(document).ready(function()
+	{
+	    $("#boton01").click(function () {
+            document.getElementById("ser").disabled = false;
+            document.getElementById("tamano").disabled = false;
+            document.getElementById("masa").disabled = false;
+	        console.log(parseInt($("#ses").val()));
+            console.log(parseInt($("#ser").val()));
+            console.log(parseInt($("#pre").val()));
+            console.log(parseInt($("#tamano").val()));
+            console.log(parseInt($("#masa").val()));
+            console.log(parseInt($("#mon").val()));
+	    });
+    });
+</script>
+
+<script>
+    window.onload = function () {
+        document.getElementById('myform').reset();
+    }
+</script>

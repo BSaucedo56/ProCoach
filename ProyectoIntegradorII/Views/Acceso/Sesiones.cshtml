@@ -276,7 +276,7 @@
                     @Html.DisplayFor(modelItem => item.fechasesion)
                 </td>
                 <td class="thcoach24" style="text-align: center; vertical-align: middle;">
-                    @Html.DisplayFor(modelItem => item.precio)
+                    USD @Html.DisplayFor(modelItem => item.precio)
                 </td>
                 @if (User.IsInRole("Cliente"))
                 {

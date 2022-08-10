@@ -342,26 +342,6 @@ namespace ProyectoIntegradorII.Controllers
             return PartialView("_PartialCoachInfo", inf);
         }
 
-        ECoach Buscar(int id)
-        {
-            return coachinfo().Where(c => c.idCoach == id).FirstOrDefault();
-        }
-
-        public IActionResult SoliCoach(int id)
-        {
-            ECoach reg = Buscar(id);
-
-            SoliCoach sCoach = new SoliCoach();
-            sCoach.idCoach = reg.idCoach;
-            sCoach.precio = reg.precio;
-
-            ViewBag.coach = reg.coach;
-            ViewBag.correo = reg.correo;
-            ViewBag.precio = sCoach.precio;
-
-            return PartialView("_PartialCoachSolicitar");
-        }
-
         IEnumerable<Pais> paises()
         {
             List<Pais> temporal = new List<Pais>();
@@ -410,27 +390,49 @@ namespace ProyectoIntegradorII.Controllers
             return temporal;
         }
 
-        [HttpPost]
-        public ActionResult SoliCoach(int id, int ses, int ser, decimal pre, int cantses, int canthor, decimal mon)
+        ECoach Buscar(int id)
         {
-            if (ses == 1)
+            return coachinfo().Where(c => c.idCoach == id).FirstOrDefault();
+        }
+
+        [HttpGet]
+        public IActionResult Solicitar(int id)
+        {
+            ECoach reg = Buscar(id);
+
+            SoliCoach sCoach = new SoliCoach();
+            sCoach.idCoach = reg.idCoach;
+            sCoach.precio = reg.precio;
+
+            ViewBag.idcoach = sCoach.idCoach;
+            ViewBag.coach = reg.coach;
+            ViewBag.correo = reg.correo;
+            ViewBag.precio = sCoach.precio;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Registrar(int idCoach, int tipoSesion, int tipoServicio, int precio, int cantidadSesiones, int cantidadHoras, int monto)
+        {
+            if (tipoSesion == 1)
             {
                 ViewBag.sesion = "Referencia Estrategica";
             }
-            if (ses == 2)
+            if (tipoSesion == 2)
             {
                 ViewBag.sesion = "Coaching";
             }
-            if (ser == 1)
+            if (tipoServicio == 1)
             {
                 ViewBag.servicio = "Individual";
             }
-            if (ser == 2)
+            if (tipoServicio == 2)
             {
                 ViewBag.servicio = "Paquete";
             }
 
-            ECoach regx = Buscar(id);
+            ECoach regx = Buscar(idCoach);
 
             ViewBag.correoCoach = regx.correo;
 
@@ -438,25 +440,25 @@ namespace ProyectoIntegradorII.Controllers
             ViewBag.paises = new SelectList(paises(), "idPais", "pais");
             ViewBag.tipodocumentos = new SelectList(tiposdocumentos(), "idDocumento", "documento");
 
-            SoliCoach reg = new SoliCoach();
-            reg.idCoach = regx.idCoach;
-            reg.tipoSesion = ses;
-            reg.tipoServicio = ser;
-            reg.precio = pre;
-            reg.cantidadSesiones = cantses;
-            reg.cantidadHoras = canthor;
-            reg.monto = mon;
+            SoliCoach s = new SoliCoach();
+            s.idCoach = regx.idCoach;
+            s.tipoSesion = tipoSesion;
+            s.tipoServicio = tipoServicio;
+            s.precio = precio;
+            s.cantidadSesiones = cantidadSesiones;
+            s.cantidadHoras = cantidadHoras;
+            s.monto = monto;
 
-            ViewBag.id = reg.idCoach;
-            ViewBag.ses = ses;
-            ViewBag.ser = ser;
-            ViewBag.precio = pre;
-            ViewBag.cantsesiones = cantses;
-            ViewBag.cantHoras = canthor;
-            ViewBag.monto = mon;
-            ViewBag.totalseshor = cantses * canthor;
+            ViewBag.id = s.idCoach;
+            ViewBag.ses = tipoSesion;
+            ViewBag.ser = tipoServicio;
+            ViewBag.precio = precio;
+            ViewBag.cantsesiones = cantidadSesiones;
+            ViewBag.cantHoras = cantidadHoras;
+            ViewBag.monto = monto;
+            ViewBag.totalseshor = cantidadSesiones * cantidadHoras;
 
-            return View(reg);
+            return View(s);
         }
 
         [HttpPost]
